@@ -82,4 +82,19 @@ table th, table td {
   padding: 8px;
 }
 
-/* Add more styling as needed for the student list */
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 768px) {
+  /* Adjust your styles for smaller screens (e.g., tablets) */
+  .user-input {
+    width: 100%; /* Make the user input container full width */
+  }
+  /* Add more responsive styles as needed */
+}
+
+@media screen and (max-width: 480px) {
+  /* Adjust your styles for even smaller screens (e.g., smartphones) */
+  body {
+    font-size: 16px; /* Decrease the font size for better readability on small screens */
+  }
+  /* Add more responsive styles as needed */
+}
