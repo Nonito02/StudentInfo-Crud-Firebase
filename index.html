@@ -14,7 +14,83 @@
     <div>
       <label for="name">Full Name:</label>
       <input type="text" id="name" />
+    </div><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ID PRODUCTION MONITORING</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>ID Production Monitoring</h1>
+
+  <div class="user-input">
+    <div>
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" />
     </div>
+    <div>
+      <label for="course">Course:</label>
+      <input type="text" id="course" />
+    </div>
+    <div>
+      <label for="status">Status:</label>
+      <input type="text" id="status" />
+    </div>
+
+    <button id="insert">Insert</button>
+    <button id="read">Search</button>
+    <button id="update">Update</button>
+    <button id="delete">Delete</button>
+
+    <input type="file" id="importFile" accept=".csv" />
+    <button id="importData">Import Data</button>
+  </div>
+
+  <!-- CSV Preview Section -->
+  <h3>CSV Preview (Select rows to import)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Select</th>
+        <th>Full Name</th>
+        <th>Course</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="csvPreviewTableBody"></tbody>
+  </table>
+  <button id="importSelected">Import Selected</button>
+
+  <!-- Students List Section -->
+  <h2>Students List</h2>
+  <button id="showStudents">Show Students</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Course</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="studentTableBody"></tbody>
+  </table>
+
+  <button id="exportToExcel">Export to Excel</button>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+  <script src="fireConfig.js"></script>
+  <script src="myscript.js"></script>
+</body>
+</html>
+
     <div>
       <label for="course">Course:</label>
       <input type="text" id="course" />
