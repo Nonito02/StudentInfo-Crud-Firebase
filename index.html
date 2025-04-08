@@ -10,22 +10,7 @@
 <body>
   <h1>ID Production Monitoring</h1>
 
-  <div class="user-input">
-    <div>
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" />
-    </div><!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ID PRODUCTION MONITORING</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <h1>ID Production Monitoring</h1>
-
+  <!-- Form Section -->
   <div class="user-input">
     <div>
       <label for="name">Full Name:</label>
@@ -40,16 +25,20 @@
       <input type="text" id="status" />
     </div>
 
-    <button id="insert">Insert</button>
-    <button id="read">Search</button>
-    <button id="update">Update</button>
-    <button id="delete">Delete</button>
+    <div class="buttons">
+      <button id="insert">Insert</button>
+      <button id="read">Search</button>
+      <button id="update">Update</button>
+      <button id="delete">Delete</button>
+    </div>
 
-    <input type="file" id="importFile" accept=".csv" />
-    <button id="importData">Import Data</button>
+    <div class="import-section">
+      <input type="file" id="importFile" accept=".csv" />
+      <button id="importData">Import Data</button>
+    </div>
   </div>
 
-  <!-- CSV Preview Section -->
+  <!-- CSV Preview Table -->
   <h3>CSV Preview (Select rows to import)</h3>
   <table>
     <thead>
@@ -64,11 +53,11 @@
   </table>
   <button id="importSelected">Import Selected</button>
 
-  <!-- Students List Section -->
+  <!-- Students Table -->
   <h2>Students List</h2>
   <button id="showStudents">Show Students</button>
 
-  <table>
+  <table id="studentTable">
     <thead>
       <tr>
         <th>Full Name</th>
@@ -81,55 +70,13 @@
 
   <button id="exportToExcel">Export to Excel</button>
 
-  <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  <!-- Firebase & Libs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 
-  <script src="fireConfig.js"></script>
-  <script src="myscript.js"></script>
-</body>
-</html>
-
-    <div>
-      <label for="course">Course:</label>
-      <input type="text" id="course" />
-    </div>
-    <div>
-      <label for="status">Status:</label>
-      <input type="text" id="status" />
-    </div>
-
-    <button id="insert">Insert</button>
-    <button id="read">Search</button>
-    <button id="update">Update</button>
-    <button id="delete">Delete</button>
-    <input type="file" id="importFile" accept=".csv" />
-<button id="importData">Import Data</button>
-
-  </div>
-
-  <h2>Students List</h2>
-  <button id="showStudents">Show Students</button>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Full Name</th>
-        <th>Course</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody id="studentTableBody"></tbody>
-  </table>
-
-  <button id="exportToExcel">Export to Excel</button>
-
-  <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-
+  <!-- Firebase Config & Custom Script -->
   <script src="fireConfig.js"></script>
   <script src="myscript.js"></script>
 </body>
