@@ -130,3 +130,57 @@ function clearForm() {
   document.getElementById("course").value = "";
   document.getElementById("status").value = "";
 }
+
+// Import function for CSV file
+document.getElementById("importData").onclick = function () {
+  var fileInput = document.getElementById("importFile");
+
+  if (fileInput.files.length === 0) {
+    alert("Please select a file to import.");
+    return;
+  }
+
+  var file = fileInput.files[0];
+
+  // Read the file using FileReader
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    var csvData = e.target.result;
+
+    // Parse the CSV data using PapaParse
+    Papa.parse(csvData, {
+      header: true,
+      skipEmptyLines: true,
+      dynamicTyping: true,
+      complete: function (results) {
+        // Insert the parsed data into Firebase
+        var students = results.data;
+
+        students.forEach(function (student) {
+          if (student.name && student.course && student.status) {
+            var newStudentRef = firebase.database().ref("student").push();
+            newStudentRef.set({
+              name: student.name,
+              course: student.course,
+              status: student.status
+            });
+          }
+        });
+
+        alert("Data imported successfully!");
+      },
+      error: function (error) {
+        console.error("Error parsing CSV:", error);
+        alert("There was an error processing the file.");
+      }
+    });
+  };
+
+  reader.onerror = function (error) {
+    console.error("Error reading file:", error);
+    alert("There was an error reading the file.");
+  };
+
+  reader.readAsText(file); // Read the file as text
+};
+
