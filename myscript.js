@@ -149,14 +149,15 @@ document.getElementById("importData").onclick = function () {
 
     // Parse the CSV data using PapaParse
     Papa.parse(csvData, {
-      header: true,
-      skipEmptyLines: true,
-      dynamicTyping: true,
+      header: true,  // Use the first row as the header
+      skipEmptyLines: true,  // Skip empty lines
+      dynamicTyping: true,  // Automatically convert types
       complete: function (results) {
         // Insert the parsed data into Firebase
         var students = results.data;
 
         students.forEach(function (student) {
+          // Ensure the data has required fields
           if (student.name && student.course && student.status) {
             var newStudentRef = firebase.database().ref("student").push();
             newStudentRef.set({
@@ -164,6 +165,18 @@ document.getElementById("importData").onclick = function () {
               course: student.course,
               status: student.status
             });
+
+            // Also add the student to the table
+            var tableBody = document.getElementById("studentTableBody");
+            var row = tableBody.insertRow();
+
+            var cell1 = row.insertCell(0); // Name
+            var cell2 = row.insertCell(1); // Course
+            var cell3 = row.insertCell(2); // Status
+
+            cell1.innerHTML = student.name;
+            cell2.innerHTML = student.course;
+            cell3.innerHTML = student.status;
           }
         });
 
