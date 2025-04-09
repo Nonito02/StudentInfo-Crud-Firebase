@@ -168,6 +168,7 @@ document.getElementById("importData").onclick = function () {
         });
 
         alert("Data imported successfully!");
+        showStudents(); // Refresh the student list after import
       },
       error: function (error) {
         console.error("Error parsing CSV:", error);
