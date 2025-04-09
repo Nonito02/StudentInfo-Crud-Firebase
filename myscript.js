@@ -1,5 +1,16 @@
 var nameV, courseV, statusV;
 
+// Initialize Firebase
+firebase.initializeApp({
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  databaseURL: "YOUR_DATABASE_URL",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
+});
+
 // Read form values
 function readForm() {
   nameV = document.getElementById("name").value;
@@ -17,14 +28,13 @@ document.getElementById("insert").onclick = function () {
     if (snapshot.exists()) {
       alert("This student is already on the list.");
     } else {
-      var newStudentRef = firebase.database().ref("student").push();  // Pushing data to the 'student' node
+      var newStudentRef = firebase.database().ref("student").push();
       newStudentRef.set({
         name: nameV,
         course: courseV,
         status: statusV
       });
       alert("Data Inserted");
-
       clearForm();
     }
   });
@@ -86,9 +96,6 @@ document.getElementById("delete").onclick = function () {
 
 // SHOW STUDENTS IN TABLE
 document.getElementById("showStudents").onclick = function () {
-  // Clear form inputs
-  clearForm();
-
   // Clear existing table body
   document.getElementById("studentTableBody").innerHTML = "";
 
@@ -157,7 +164,6 @@ document.getElementById("importData").onclick = function () {
         var students = results.data;
 
         students.forEach(function (student) {
-          // Ensure the data has required fields
           if (student.name && student.course && student.status) {
             var newStudentRef = firebase.database().ref("student").push();
             newStudentRef.set({
