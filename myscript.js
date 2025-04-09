@@ -17,7 +17,7 @@ document.getElementById("insert").onclick = function () {
     if (snapshot.exists()) {
       alert("This student is already on the list.");
     } else {
-      var newStudentRef = firebase.database().ref("student").push();
+      var newStudentRef = firebase.database().ref("student").push();  // Pushing data to the 'student' node
       newStudentRef.set({
         name: nameV,
         course: courseV,
@@ -168,7 +168,6 @@ document.getElementById("importData").onclick = function () {
         });
 
         alert("Data imported successfully!");
-        showStudents(); // Refresh the student list after import
       },
       error: function (error) {
         console.error("Error parsing CSV:", error);
