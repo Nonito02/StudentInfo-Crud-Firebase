@@ -9,36 +9,3 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
-document.getElementById("export").onclick = function () {
-  var studentRef = firebase.database().ref("student");
-
-  studentRef.once("value", function (snapshot) {
-    var students = snapshot.val();
-    if (students) {
-     
-      var data = [];
-
-      // Adding headers: Name, Course, and Status
-      data.push(["Name", "Course", "Status"]);
-
-      // Loop through the students and push the required fields (name, course, status)
-      for (var rollNo in students) {
-        var student = students[rollNo];
-        data.push([student.name, student.course, student.status]);
-      }
-
-      // Create worksheet from the data array
-      var ws = XLSX.utils.aoa_to_sheet(data);
-
-      // Create a new workbook and append the worksheet
-      var wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Students");
-
-      // Export the workbook as an Excel file
-      XLSX.writeFile(wb, "student_data.xlsx");
-    } else {
-      alert("No student records found.");
-    }
-  });
-};
