@@ -4,266 +4,133 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ID PRODUCTION MONITORING</title>
-  <link rel="stylesheet" href="style.css" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <title>ID Production Monitoring</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      padding: 2rem;
+    }
+
+    h1, h2 {
+      color: #0d3b66;
+    }
+
+    .user-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .user-input div {
+      flex: 1 1 200px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input[type="text"], input[type="file"] {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 0.6rem 1.2rem;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 0.25rem;
+    }
+
+    button:hover {
+      background-color: #00509e;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      background-color: white;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #e9ecef;
+    }
+
+    #selectAll {
+      transform: scale(1.2);
+    }
+  </style>
 </head>
 <body>
-  <h1>ID Production Monitoring</h1>
-  <div class="user-input">
-    <div>
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" />
+  <div class="container">
+    <h1>ID Production Monitoring</h1>
+    <div class="user-input">
+      <div>
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" />
+      </div>
+      <div>
+        <label for="course">Course:</label>
+        <input type="text" id="course" />
+      </div>
+      <div>
+        <label for="status">Status:</label>
+        <input type="text" id="status" />
+      </div>
+      <div style="display: flex; align-items: flex-end; gap: 0.5rem; flex-wrap: wrap;">
+        <button id="insert">Insert</button>
+        <button id="read">Search</button>
+        <button id="update">Update</button>
+        <button id="delete">Delete</button>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <input type="file" id="importFile" accept=".csv" />
+        <button id="importData">Import Data</button>
+      </div>
     </div>
-    <div>
-      <label for="course">Course:</label>
-      <input type="text" id="course" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-    <div>
-      <label for="status">Status:</label>
-      <input type="text" id="status" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-    <button id="insert">Insert</button>
-    <button id="read">Search</button>
-    <button id="update">Update</button>
-    <button id="delete">Delete</button>
-    <input type="file" id="importFile" accept=".csv" />
-    <button id="importData">Import Data</button>
+    <h2>Students List</h2>
+    <button id="showStudents">Show Students</button>
+    <table>
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="selectAll" /></th>
+          <th>Full Name</th>
+          <th>Course</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="studentTableBody"></tbody>
+    </table>
+    <button id="deleteSelected">Delete Selected</button>
+    <button id="exportToExcel">Export to Excel</button>
   </div>
-  <h2>Students List</h2>
-  <button id="showStudents">Show Students</button>
-  <table>
-    <thead>
-      <tr>
-        <th><input type="checkbox" id="selectAll" /></th> <!-- Select All checkbox -->
-        <th>Full Name</th>
-        <th>Course</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody id="studentTableBody"></tbody>
-  </table>
-  <button id="deleteSelected">Delete Selected</button> <!-- Delete Selected Button -->
-  <button id="exportToExcel">Export to Excel</button>
 
-  <!-- Firebase and External Libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
-  <script src="fireConfig.js"></script> <!-- Your Firebase configuration -->
+  <script src="fireConfig.js"></script>
   <script src="myscript.js"></script>
 </body>
 </html>
