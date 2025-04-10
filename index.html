@@ -4,21 +4,34 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Import Excel to Firebase</title>
+  <title>ID PRODUCTION MONITORING</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Import Excel Data to Firebase</h1>
-
- 
-
-
-  <input type="file" id="excelFile" accept=".xlsx, .xls" />
-  <button id="importData">Import Data</button>
-   <button id="insertAll">Insert All to Firebase</button>
-
+  <h1>ID Production Monitoring</h1>
+  <div class="user-input">
+    <div>
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" />
+    </div>
+    <div>
+      <label for="course">Course:</label>
+      <input type="text" id="course" />
+    </div>
+    <div>
+      <label for="status">Status:</label>
+      <input type="text" id="status" />
+    </div>
+    <button id="insert">Insert</button>
+    <button id="read">Search</button>
+    <button id="update">Update</button>
+    <button id="delete">Delete</button>
+    <input type="file" id="importFile" accept=".csv" />
+    <button id="importData">Import Data</button>
+  </div>
   <h2>Students List</h2>
-  <table border="1">
+  <button id="showStudents">Show Students</button>
+  <table>
     <thead>
       <tr>
         <th>Full Name</th>
@@ -28,79 +41,13 @@
     </thead>
     <tbody id="studentTableBody"></tbody>
   </table>
+  <button id="exportToExcel">Export to Excel</button>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-
-  <!-- XLSX Library -->
+  <!-- Firebase and External Libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
-
-  <!-- Firebase Config -->
-  <script>
-    // Replace this with your actual Firebase config
-var firebaseConfig = {
-  apiKey: "AIzaSyCqJUpVX0MYS5ZFl4Ji6JF6WHQyMwMR1xE",
-  authDomain: "studentinfo-621f6.firebaseapp.com",
-  databaseURL: "https://studentinfo-621f6-default-rtdb.firebaseio.com",
-  projectId: "studentinfo-621f6",
-  storageBucket: "studentinfo-621f6.appspot.com",
-  messagingSenderId: "917260810120",
-  appId: "1:917260810120:web:42ccf14db52b9658ddec3d"
-};
-
-firebase.initializeApp(firebaseConfig);
-  </script>
-
-  <!-- Main Script -->
-  <script>
-    const studentRef = firebase.database().ref("students");
-
-    function addStudentRow(student) {
-      const tableBody = document.getElementById("studentTableBody");
-      const row = tableBody.insertRow();
-      row.insertCell(0).innerText = student.name || "";
-      row.insertCell(1).innerText = student.course || "";
-      row.insertCell(2).innerText = student.status || "";
-    }
-
-    document.getElementById("importData").addEventListener("click", () => {
-      const fileInput = document.getElementById("excelFile");
-      const tableBody = document.getElementById("studentTableBody");
-
-      if (!fileInput.files.length) {
-        return alert("Please select an Excel file.");
-      }
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: "array" });
-
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
-        const students = XLSX.utils.sheet_to_json(sheet);
-
-        // Clear table
-        tableBody.innerHTML = "";
-
-        students.forEach(student => {
-          if (student.name && student.course && student.status) {
-            studentRef.push(student);
-            addStudentRow(student);
-          }
-        });
-
-        alert("Excel data imported successfully!");
-      };
-
-      reader.onerror = function (error) {
-        console.error("File Error:", error);
-        alert("Error reading the Excel file.");
-      };
-
-      reader.readAsArrayBuffer(fileInput.files[0]);
-    });
-  </script>
+  <script src="fireConfig.js"></script> <!-- Your Firebase configuration -->
+  <script src="myscript.js"></script>
 </body>
 </html>
