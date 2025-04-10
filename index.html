@@ -12,69 +12,39 @@
       background-color: #f8f9fa;
       margin: 0;
       padding: 0;
-      display: flex;
     }
 
-    /* Sidebar Styles */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background-color: #003366;
-      padding: 1rem;
-      color: white;
-      transition: 0.3s ease;
-      z-index: 10;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    }
-
-    .sidebar.open {
-      left: 0;
-    }
-
-    .sidebar button {
-      background-color: #003366;
-      color: white;
-      border: none;
-      padding: 1rem;
-      text-align: left;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 100%;
-      transition: background-color 0.3s ease;
-    }
-
-    .sidebar button:hover {
-      background-color: #00509e;
-    }
-
-    .sidebar input[type="file"] {
-      background-color: #003366;
-      color: white;
-      border: none;
-      padding: 1rem;
-      margin-top: 1rem;
-      cursor: pointer;
-      width: 100%;
-      border-radius: 4px;
-    }
-
-    /* Main Content Area */
+    /* Container Styles */
     .container {
-      margin-left: 0;
       padding: 2rem;
-      width: 100%;
-      transition: margin-left 0.3s ease;
     }
 
     h1, h2 {
       color: #0d3b66;
     }
 
+    /* Compact button styles */
+    .button-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .button-container button {
+      padding: 0.4rem 1rem;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .button-container button:hover {
+      background-color: #00509e;
+    }
+
+    /* Form Styles */
     .user-input {
       display: flex;
       flex-wrap: wrap;
@@ -99,20 +69,7 @@
       border-radius: 4px;
     }
 
-    button {
-      padding: 0.6rem 1.2rem;
-      background-color: #003366;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin: 0.25rem;
-    }
-
-    button:hover {
-      background-color: #00509e;
-    }
-
+    /* Table Styles */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -133,7 +90,6 @@
     /* Responsive Design */
     @media screen and (max-width: 768px) {
       .container {
-        margin-left: 0;
         padding: 1rem;
       }
 
@@ -155,27 +111,6 @@
       table {
         font-size: 0.9rem;
       }
-
-      #showStudents,
-      #deleteSelected,
-      #exportToExcel {
-        width: 100%;
-        padding: 1rem;
-        margin-top: 1rem;
-      }
-
-      .toggle-sidebar {
-        display: block;
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        background-color: #003366;
-        color: white;
-        padding: 1rem;
-        border: none;
-        cursor: pointer;
-        z-index: 20;
-      }
     }
 
     @media screen and (max-width: 480px) {
@@ -190,22 +125,18 @@
   </style>
 </head>
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <button id="insert">Insert</button>
-    <button id="read">Search</button>
-    <button id="update">Update</button>
-    <button id="delete">Delete</button>
-    <input type="file" id="importFile" accept=".csv" />
-    <button id="importData">Import Data</button>
-    <button id="showStudents">Show Students</button>
-    <button id="deleteSelected">Delete Selected</button>
-    <button id="exportToExcel">Export to Excel</button>
-  </div>
-
-  <!-- Main Content -->
   <div class="container">
     <h1>ID Production Monitoring</h1>
+
+    <!-- Compact Buttons -->
+    <div class="button-container">
+      <button id="insert">Insert</button>
+      <button id="read">Search</button>
+      <button id="update">Update</button>
+      <button id="delete">Delete</button>
+    </div>
+
+    <!-- User Input Form -->
     <div class="user-input">
       <div>
         <label for="name">Full Name:</label>
@@ -232,21 +163,15 @@
       </thead>
       <tbody id="studentTableBody"></tbody>
     </table>
+    
+    <div class="button-container">
+      <button id="showStudents">Show Students</button>
+      <button id="deleteSelected">Delete Selected</button>
+      <button id="exportToExcel">Export to Excel</button>
+    </div>
+
   </div>
 
-  <!-- Sidebar Toggle Button -->
-  <button class="toggle-sidebar">☰</button>
-
-  <script>
-    const toggleButton = document.querySelector('.toggle-sidebar');
-    const sidebar = document.querySelector('.sidebar');
-    
-    toggleButton.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-    });
-  </script>
-
-  <!-- Firebase and Other Scripts -->
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
