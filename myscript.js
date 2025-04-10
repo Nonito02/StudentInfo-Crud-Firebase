@@ -1,5 +1,5 @@
 <script>
-  const studentRef = firebase.database().ref("students");
+  const studentRef = firebase.database().ref("student");
   let importedStudents = []; // Holds previewed data
 
   // Function to add a student row to the table for preview
