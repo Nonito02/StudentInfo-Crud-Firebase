@@ -185,82 +185,7 @@ document.getElementById("importData").onclick = function () {
 };
 
 // Function to display students and include a checkbox for each row
-function displayStudents(students) {
-  const tableBody = document.getElementById("studentTableBody");
-  tableBody.innerHTML = ""; // Clear existing rows
-
-  if (students) {
-    for (const key in students) {
-      const student = students[key];
-      const row = tableBody.insertRow();
-      
-      row.innerHTML = `
-        <td><input type="checkbox" class="selectStudent" data-key="${key}" /></td>
-        <td>${student.name || "N/A"}</td>
-        <td>${student.course || "N/A"}</td>
-        <td>${student.status || "Pending"}</td>
-      `;
-    }
-  } else {
-    tableBody.innerHTML = `
-      <tr>
-        <td colspan="4" style="text-align: center;">
-          <p>No students found</p>
-        </td>
-      </tr>
-    `;
-  }
-}
-
-// Select/Deselect all checkboxes
-document.getElementById("selectAll").addEventListener("change", function () {
-  const checkboxes = document.querySelectorAll(".selectStudent");
-  checkboxes.forEach(checkbox => {
-    checkbox.checked = this.checked;
-  });
-});
-
-// Delete selected students
-document.getElementById("deleteSelected").addEventListener("click", function () {
-  const checkboxes = document.querySelectorAll(".selectStudent:checked");
-  const keysToDelete = [];
-  
-  checkboxes.forEach(checkbox => {
-    keysToDelete.push(checkbox.dataset.key);
-  });
-
-  if (keysToDelete.length > 0) {
-    // Delete from Firebase
-    keysToDelete.forEach(key => {
-      firebase.database().ref("students").child(key).remove()
-        .then(() => {
-          console.log(`Student with ID ${key} deleted.`);
-        })
-        .catch(error => {
-          console.error("Error deleting student:", error);
-        });
-    });
-    
-    // Refresh the student list
-    displayStudents();
-  } else {
-    alert("Please select at least one student to delete.");
-  }
-});
-
-// Function to fetch and display students
-document.getElementById("showStudents").addEventListener("click", function () {
-  firebase.database().ref("students").once("value")
-    .then(snapshot => {
-      const students = snapshot.val();
-      displayStudents(students);
-    })
-    .catch(error => {
-      console.error("Error fetching students:", error);
-    });
-});
-
-
+// Event listener for Import Data button
 document.getElementById("importData").addEventListener("click", function() {
   const fileInput = document.getElementById("importFile");
   const file = fileInput.files[0];
@@ -296,9 +221,9 @@ document.getElementById("importData").addEventListener("click", function() {
         // Insert data from the Excel file directly into the table cells
         row.innerHTML = `
           <td><input type="checkbox" class="studentCheckbox" data-id="${student.id || ''}" /></td>
-          <td>${student['name'] || ''}</td>
-          <td>${student['course'] || ''}</td>
-          <td>${student['status'] || ''}</td>
+          <td>${student['Full Name'] || ''}</td>
+          <td>${student['Course'] || ''}</td>
+          <td>${student['Status'] || ''}</td>
         `;
       });
       alert("Data imported successfully!");
@@ -315,3 +240,11 @@ document.getElementById("importData").addEventListener("click", function() {
   // Read the file as binary string
   reader.readAsBinaryString(file);
 });
+
+// Event listener for "Show Students" button
+document.getElementById("showStudents").addEventListener("click", function() {
+  // Show students logic (e.g., fetching from database, or if in Firebase, use Firebase SDK to fetch the data)
+  // For example, here you can call a function to fetch data from Firebase or your database and then update the table
+});
+
+// Add logic for insert, update, delete, and other operations here as needed
