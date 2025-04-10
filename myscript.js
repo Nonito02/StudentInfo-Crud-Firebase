@@ -1,3 +1,4 @@
+// Define global variables
 var nameV, courseV, statusV;
 
 // Read form values
@@ -8,24 +9,59 @@ function readForm() {
   console.log(nameV, courseV, statusV);
 }
 
+// Clear form inputs
+function clearForm() {
+  document.getElementById("name").value = "";
+  document.getElementById("course").value = "";
+  document.getElementById("status").value = "";
+}
+
+// Show students in table (used both for button and after import)
+function showStudentTable() {
+  clearForm();
+  document.getElementById("studentTableBody").innerHTML = "";
+
+  var studentRef = firebase.database().ref("students");
+
+  studentRef.once("value", function(snapshot) {
+    var students = snapshot.val();
+    if (students) {
+      var tableBody = document.getElementById("studentTableBody");
+      for (var id in students) {
+        var student = students[id];
+        var row = tableBody.insertRow();
+
+        var cell1 = row.insertCell(0); // Name
+        var cell2 = row.insertCell(1); // Course
+        var cell3 = row.insertCell(2); // Status
+
+        cell1.innerHTML = student.name;
+        cell2.innerHTML = student.course;
+        cell3.innerHTML = student.status;
+      }
+    } else {
+      alert("No student records found.");
+    }
+  });
+}
+
 // INSERT
 document.getElementById("insert").onclick = function () {
   readForm();
-
   var studentRef = firebase.database().ref("students").orderByChild("name").equalTo(nameV);
   studentRef.once("value").then(function(snapshot) {
     if (snapshot.exists()) {
       alert("This student is already on the list.");
     } else {
-      var newStudentRef = firebase.database().ref("students").push(); // Changed to "students"
+      var newStudentRef = firebase.database().ref("students").push();
       newStudentRef.set({
         name: nameV,
         course: courseV,
         status: statusV
       });
       alert("Data Inserted");
-
       clearForm();
+      showStudentTable(); // Refresh table
     }
   });
 };
@@ -33,7 +69,6 @@ document.getElementById("insert").onclick = function () {
 // READ
 document.getElementById("read").onclick = function () {
   readForm();
-
   firebase.database().ref("students").orderByChild("name").equalTo(nameV).once("value")
     .then(function(snapshot) {
       var data = snapshot.val();
@@ -56,7 +91,6 @@ document.getElementById("read").onclick = function () {
 // UPDATE
 document.getElementById("update").onclick = function () {
   readForm();
-
   firebase.database().ref("students").orderByChild("name").equalTo(nameV).once("value")
     .then(function(snapshot) {
       snapshot.forEach(function(data) {
@@ -67,13 +101,13 @@ document.getElementById("update").onclick = function () {
       });
       alert("Data Updated");
       clearForm();
+      showStudentTable(); // Refresh table
     });
 };
 
 // DELETE
 document.getElementById("delete").onclick = function () {
   readForm();
-
   firebase.database().ref("students").orderByChild("name").equalTo(nameV).once("value")
     .then(function(snapshot) {
       snapshot.forEach(function(data) {
@@ -81,41 +115,12 @@ document.getElementById("delete").onclick = function () {
       });
       alert("Data Deleted");
       clearForm();
+      showStudentTable(); // Refresh table
     });
 };
 
 // SHOW STUDENTS IN TABLE
-document.getElementById("showStudents").onclick = function () {
-  // Clear form inputs
-  clearForm();
-
-  // Clear existing table body
-  document.getElementById("studentTableBody").innerHTML = "";
-
-  var studentRef = firebase.database().ref("students"); // Changed to "students"
-
-  studentRef.once("value", function(snapshot) {
-    var students = snapshot.val();
-    if (students) {
-      var tableBody = document.getElementById("studentTableBody");
-
-      for (var id in students) {
-        var student = students[id];
-        var row = tableBody.insertRow();
-
-        var cell1 = row.insertCell(0); // Name
-        var cell2 = row.insertCell(1); // Course
-        var cell3 = row.insertCell(2); // Status
-
-        cell1.innerHTML = student.name;
-        cell2.innerHTML = student.course;
-        cell3.innerHTML = student.status;
-      }
-    } else {
-      alert("No student records found.");
-    }
-  });
-};
+document.getElementById("showStudents").onclick = showStudentTable;
 
 // EXPORT TO EXCEL
 document.getElementById("exportToExcel").onclick = function () {
@@ -124,14 +129,7 @@ document.getElementById("exportToExcel").onclick = function () {
   XLSX.writeFile(wb, "students.xlsx");
 };
 
-// Clear form function
-function clearForm() {
-  document.getElementById("name").value = "";
-  document.getElementById("course").value = "";
-  document.getElementById("status").value = "";
-}
-
-// Import function for CSV file
+// IMPORT CSV AND DISPLAY
 document.getElementById("importData").onclick = function () {
   var fileInput = document.getElementById("importFile");
 
@@ -141,24 +139,21 @@ document.getElementById("importData").onclick = function () {
   }
 
   var file = fileInput.files[0];
-
-  // Read the file using FileReader
   var reader = new FileReader();
+
   reader.onload = function (e) {
     var csvData = e.target.result;
 
-    // Parse the CSV data using PapaParse
     Papa.parse(csvData, {
       header: true,
       skipEmptyLines: true,
       dynamicTyping: true,
       complete: function (results) {
-        // Insert the parsed data into Firebase
         var students = results.data;
 
         students.forEach(function (student) {
           if (student.name && student.course && student.status) {
-            var newStudentRef = firebase.database().ref("students").push(); // Changed to "students"
+            var newStudentRef = firebase.database().ref("students").push();
             newStudentRef.set({
               name: student.name,
               course: student.course,
@@ -168,6 +163,7 @@ document.getElementById("importData").onclick = function () {
         });
 
         alert("Data imported successfully!");
+        showStudentTable(); // ✅ Automatically show the new data in the table
       },
       error: function (error) {
         console.error("Error parsing CSV:", error);
@@ -181,5 +177,5 @@ document.getElementById("importData").onclick = function () {
     alert("There was an error reading the file.");
   };
 
-  reader.readAsText(file); // Read the file as text
+  reader.readAsText(file);
 };
