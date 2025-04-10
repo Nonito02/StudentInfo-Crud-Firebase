@@ -16,12 +16,13 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      font-size: 1rem;
+      font-size: 1rem; /* Increase base font size */
     }
 
+    /* Container Styles */
     .container {
       width: 100%;
-      max-width: 1000px;
+      max-width: 1000px; /* Limit container width on large screens */
       padding: 2rem;
       box-sizing: border-box;
       background-color: white;
@@ -32,9 +33,10 @@
     h1, h2 {
       color: #0d3b66;
       text-align: center;
-      font-size: 2rem;
+      font-size: 2rem; /* Increase font size for headers */
     }
 
+    /* Compact button styles */
     .button-container {
       display: flex;
       gap: 1rem;
@@ -43,23 +45,24 @@
     }
 
     .button-container button {
-      padding: 0.6rem 1.2rem;
+      padding: 0.6rem 1.2rem; /* Increase padding for buttons */
       background-color: #003366;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 1rem;
+      font-size: 1rem; /* Increase font size for buttons */
     }
 
     .button-container button:hover {
       background-color: #00509e;
     }
 
+    /* Form Styles */
     .user-input {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.2rem;
+      gap: 1.2rem; /* Increase gap between form elements */
       margin-bottom: 2rem;
       justify-content: center;
     }
@@ -71,25 +74,25 @@
 
     label {
       display: block;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.6rem; /* Increase margin for labels */
       font-weight: bold;
-      font-size: 1rem;
+      font-size: 1rem; /* Increase font size for labels */
     }
 
     input[type="text"], input[type="file"] {
       width: 100%;
-      padding: 0.6rem;
+      padding: 0.8rem; /* Increase padding for inputs */
       border: 1px solid #ccc;
       border-radius: 4px;
-      font-size: 0.9rem;  /* Smaller font for input */
+      font-size: 1rem; /* Increase font size for inputs */
     }
 
-    /* Adjust placeholder size */
     input[type="text"]::placeholder {
-      font-size: 0.8rem;
-      color: #999;
+      font-style: italic;
+      color: #aaa;
     }
 
+    /* Table Styles */
     table {
       width: 100%;
       border-collapse: collapse;
@@ -97,39 +100,27 @@
     }
 
     th, td {
-      padding: 1rem;
+      padding: 1rem; /* Increase padding for table cells */
       border: 1px solid #ccc;
       text-align: left;
-      font-size: 1rem;
+      font-size: 1rem; /* Increase font size for table content */
     }
 
     th {
       background-color: #e9ecef;
-      position: sticky;
-      top: 0;
-      z-index: 2;
     }
 
+    /* Scrollable Table Container */
     .table-container {
-      max-height: 300px;
-      overflow-y: auto;
+      max-height: 300px;  /* Adjust as needed */
+      overflow-y: auto;   /* Enable vertical scrolling */
       margin-top: 1rem;
     }
 
+    /* Responsive Design */
     @media screen and (max-width: 768px) {
       .container {
         padding: 1.5rem;
-      }
-
-      .button-container {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-      }
-
-      .button-container button {
-        width: auto;
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
       }
 
       .user-input {
@@ -139,20 +130,49 @@
 
       .user-input div {
         flex: 1 1 100%;
+
+
       }
 
-      input[type="file"] {
-        margin-top: 10px;
+      .button-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .button-container button {
+        width: 100%;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        font-size: 1rem;
+      }
+
+      input[type="text"], input[type="file"] {
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+
+      table {
+        font-size: 1rem;
       }
     }
 
     @media screen and (max-width: 480px) {
       h1, h2 {
-        font-size: 1.75rem;
+        font-size: 1.75rem; /* Slightly decrease size for smaller screens */
       }
 
-      button {
+      .button-container button {
         font-size: 1rem;
+        padding: 0.8rem;
+      }
+
+      input[type="text"], input[type="file"] {
+        font-size: 1rem;
+        padding: 1rem;
+      }
+
+      label {
+        font-size: 0.9rem; /* Adjust label font size for smaller screens */
       }
     }
   </style>
@@ -190,23 +210,21 @@
     <div class="button-container">
       <button id="showStudents">Show Students</button>
       <button id="exportToExcel">Export to Excel</button>
-      <button id="selectAll">Select All</button>
-      <button id="deleteSelected">Delete Selected</button> <!-- Delete Selected button -->
     </div>
 
     <h2>Students List</h2>
-    
+
     <!-- Scrollable Table -->
     <div class="table-container">
       <table>
         <thead>
           <tr>
-            <th><input type="checkbox" id="checkAll" /> Select All</th>
             <th>Full Name</th>
             <th>Course</th>
             <th>Status</th>
           </tr>
         </thead>
+        <tbody id="studentTableBody"></tbody>
       </table>
     </div>
   </div>
@@ -216,34 +234,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
   <script src="fireConfig.js"></script>
   <script src="myscript.js"></script>
-
-  <script>
-    // Select All button functionality
-    document.getElementById("selectAll").addEventListener("click", function() {
-      let checkboxes = document.querySelectorAll(".selectRow");
-      let checkAll = document.getElementById("checkAll");
-
-      checkboxes.forEach(function(checkbox) {
-        checkbox.checked = checkAll.checked;
-      });
-    });
-
-    // Select All checkbox functionality
-    document.getElementById("checkAll").addEventListener("change", function() {
-      let checkboxes = document.querySelectorAll(".selectRow");
-      checkboxes.forEach(function(checkbox) {
-        checkbox.checked = this.checked;
-      });
-    });
-
-    // Delete Selected rows
-    document.getElementById("deleteSelected").addEventListener("click", function() {
-      let checkboxes = document.querySelectorAll(".selectRow:checked");
-      checkboxes.forEach(function(checkbox) {
-        let row = checkbox.closest("tr");
-        row.remove(); // Remove the row from the table
-      });
-    });
-  </script>
 </body>
 </html>
