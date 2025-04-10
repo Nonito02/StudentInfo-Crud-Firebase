@@ -16,20 +16,22 @@
 
     .container {
       padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
     }
 
     h1, h2 {
       color: #0d3b66;
     }
 
-    .user-input {
+    .form-group {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
-    .user-input div {
+    .form-group div {
       flex: 1 1 200px;
     }
 
@@ -46,6 +48,13 @@
       border-radius: 4px;
     }
 
+    .btn-group {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
     button {
       padding: 0.6rem 1.2rem;
       background-color: #003366;
@@ -53,11 +62,23 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      margin: 0.25rem;
     }
 
     button:hover {
       background-color: #00509e;
+    }
+
+    .search-bar {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .search-bar input[type="text"] {
+      width: 200px;
     }
 
     table {
@@ -80,12 +101,21 @@
     #selectAll {
       transform: scale(1.2);
     }
+
+    .table-actions {
+      margin-top: 1rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>ID Production Monitoring</h1>
-    <div class="user-input">
+
+    <!-- Form Input Section -->
+    <div class="form-group">
       <div>
         <label for="name">Full Name:</label>
         <input type="text" id="name" />
@@ -98,20 +128,27 @@
         <label for="status">Status:</label>
         <input type="text" id="status" />
       </div>
-      <div style="display: flex; align-items: flex-end; gap: 0.5rem; flex-wrap: wrap;">
+      <div class="btn-group">
         <button id="insert">Insert</button>
-        <button id="read">Search</button>
         <button id="update">Update</button>
         <button id="delete">Delete</button>
       </div>
-      <div style="display: flex; flex-direction: column;">
+      <div>
+        <label for="importFile">Import CSV:</label>
         <input type="file" id="importFile" accept=".csv" />
         <button id="importData">Import Data</button>
       </div>
     </div>
 
     <h2>Students List</h2>
-    <button id="showStudents">Show Students</button>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by name or course" />
+      <button id="read">Search</button>
+    </div>
+
+    <!-- Table -->
     <table>
       <thead>
         <tr>
@@ -123,8 +160,13 @@
       </thead>
       <tbody id="studentTableBody"></tbody>
     </table>
-    <button id="deleteSelected">Delete Selected</button>
-    <button id="exportToExcel">Export to Excel</button>
+
+    <!-- Table Actions -->
+    <div class="table-actions">
+      <button id="showStudents">Show Students</button>
+      <button id="deleteSelected">Delete Selected</button>
+      <button id="exportToExcel">Export to Excel</button>
+    </div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
