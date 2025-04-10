@@ -1,77 +1,81 @@
-// Global variable to store imported data
-let importedStudents = [];
+<script>
+  const studentRef = firebase.database().ref("students");
+  let importedStudents = []; // Holds previewed data
 
-// IMPORT FROM CSV (PREVIEW ONLY)
-document.getElementById("importData").onclick = function () {
-  const fileInput = document.getElementById("importFile");
-  const tableBody = document.getElementById("studentTableBody");
-
-  if (!fileInput.files.length) {
-    return alert("Please select a file to import.");
+  function addStudentRow(student) {
+    const tableBody = document.getElementById("studentTableBody");
+    const row = tableBody.insertRow();
+    row.insertCell(0).innerText = student.name || "";
+    row.insertCell(1).innerText = student.course || "";
+    row.insertCell(2).innerText = student.status || "";
   }
 
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    Papa.parse(e.target.result, {
-      header: true,
-      skipEmptyLines: true,
-      dynamicTyping: true,
-      complete: function (results) {
-        importedStudents = results.data.filter(student =>
-          student.name && student.course && student.status
-        );
+  // Preview data only (don't insert yet)
+  document.getElementById("importData").addEventListener("click", () => {
+    const fileInput = document.getElementById("excelFile");
+    const tableBody = document.getElementById("studentTableBody");
 
-        tableBody.innerHTML = "";
-        importedStudents.forEach(addStudentRow);
+    if (!fileInput.files.length) {
+      return alert("Please select an Excel file.");
+    }
 
-        if (importedStudents.length > 0) {
-          alert("Data previewed successfully! Click 'Insert All to Firebase' to upload.");
-          document.getElementById("insertAll").style.display = "inline-block";
-        } else {
-          alert("No valid rows found in CSV.");
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const students = XLSX.utils.sheet_to_json(sheet);
+
+      // Clear previous
+      tableBody.innerHTML = "";
+      importedStudents = [];
+
+      students.forEach(student => {
+        if (student.name && student.course && student.status) {
+          importedStudents.push(student);
+          addStudentRow(student);
         }
-      },
-      error: function (error) {
-        console.error("CSV Error:", error);
-        alert("Error processing the CSV file.");
+      });
+
+      if (importedStudents.length > 0) {
+        alert("Data previewed successfully! Click 'Insert All to Firebase' to upload.");
+        document.getElementById("insertAll").style.display = "inline-block";
+      } else {
+        alert("No valid data found.");
       }
-    });
-  };
-
-  reader.onerror = function (error) {
-    console.error("File Error:", error);
-    alert("Error reading the selected file.");
-  };
-
-  reader.readAsText(fileInput.files[0]);
-};
-
-// INSERT ALL IMPORTED DATA TO FIREBASE
-document.getElementById("insertAll").onclick = async function () {
-  if (!importedStudents.length) {
-    return alert("No imported data to insert.");
-  }
-
-  let successCount = 0;
-  let failCount = 0;
-
-  for (const student of importedStudents) {
-    const newStudent = {
-      name: student.name.toString().trim(),
-      course: student.course.toString().trim(),
-      status: student.status.toString().trim()
     };
 
-    try {
-      await studentRef.push(newStudent);
-      successCount++;
-    } catch (error) {
-      console.error("Insert error:", error);
-      failCount++;
-    }
-  }
+    reader.onerror = function (error) {
+      console.error("File Error:", error);
+      alert("Error reading the Excel file.");
+    };
 
-  alert(`Insert Complete!\nSuccess: ${successCount}\nFailed: ${failCount}`);
-  importedStudents = [];
-  document.getElementById("insertAll").style.display = "none";
-};
+    reader.readAsArrayBuffer(fileInput.files[0]);
+  });
+
+  // Insert to Firebase
+  document.getElementById("insertAll").addEventListener("click", async () => {
+    if (!importedStudents.length) {
+      return alert("No data to insert.");
+    }
+
+    let success = 0;
+    let failed = 0;
+
+    for (const student of importedStudents) {
+      try {
+        await studentRef.push(student);
+        success++;
+      } catch (error) {
+        console.error("Insert error:", error);
+        failed++;
+      }
+    }
+
+    alert(`Insert completed!\nSuccess: ${success}\nFailed: ${failed}`);
+    document.getElementById("insertAll").style.display = "none";
+    importedStudents = [];
+  });
+</script>
