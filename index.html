@@ -9,7 +9,6 @@
 </head>
 <body>
   <h1>ID Production Monitoring</h1>
-
   <div class="user-input">
     <div>
       <label for="name">Full Name:</label>
@@ -23,22 +22,19 @@
       <label for="status">Status:</label>
       <input type="text" id="status" />
     </div>
-
     <button id="insert">Insert</button>
     <button id="read">Search</button>
     <button id="update">Update</button>
     <button id="delete">Delete</button>
-    <input type="file" id="importFile" accept=".xlsx" />
+    <input type="file" id="importFile" accept=".csv" />
     <button id="importData">Import Data</button>
   </div>
-
   <h2>Students List</h2>
   <button id="showStudents">Show Students</button>
-
-  <table id="studentTable">
+  <table>
     <thead>
       <tr>
-        <th><input type="checkbox" id="selectAll" /></th>
+        <th><input type="checkbox" id="selectAll" /></th> <!-- Select All checkbox -->
         <th>Full Name</th>
         <th>Course</th>
         <th>Status</th>
@@ -46,19 +42,14 @@
     </thead>
     <tbody id="studentTableBody"></tbody>
   </table>
-
-  <button id="deleteSelected">Delete Selected</button>
+  <button id="deleteSelected">Delete Selected</button> <!-- Delete Selected Button -->
   <button id="exportToExcel">Export to Excel</button>
 
   <!-- Firebase and External Libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
-
-  <!-- Firebase Config -->
-  <script src="fireConfig.js"></script>
-
-  <!-- Your App Script -->
+  <script src="fireConfig.js"></script> <!-- Your Firebase configuration -->
   <script src="myscript.js"></script>
 </body>
 </html>
