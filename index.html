@@ -12,15 +12,26 @@
       background-color: #f8f9fa;
       margin: 0;
       padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
 
     /* Container Styles */
     .container {
+      width: 100%;
+      max-width: 1000px; /* Limit container width on large screens */
       padding: 2rem;
+      box-sizing: border-box;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     h1, h2 {
       color: #0d3b66;
+      text-align: center;
     }
 
     /* Compact button styles */
@@ -28,6 +39,7 @@
       display: flex;
       gap: 1rem;
       margin-bottom: 2rem;
+      justify-content: center;
     }
 
     .button-container button {
@@ -50,10 +62,12 @@
       flex-wrap: wrap;
       gap: 1rem;
       margin-bottom: 2rem;
+      justify-content: center;
     }
 
     .user-input div {
       flex: 1 1 200px;
+      max-width: 300px;
     }
 
     label {
@@ -152,11 +166,11 @@
       </div>
     </div>
 
-     <div class="button-container">
+    <div class="button-container">
       <button id="showStudents">Show Students</button>
-   
       <button id="exportToExcel">Export to Excel</button>
     </div>
+
     <h2>Students List</h2>
     <table>
       <thead>
@@ -168,9 +182,6 @@
       </thead>
       <tbody id="studentTableBody"></tbody>
     </table>
-    
-   
-
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
