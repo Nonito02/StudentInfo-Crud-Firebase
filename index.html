@@ -4,66 +4,64 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ID PRODUCTION MONITORING</title>
+  <title>Import Excel to Firebase</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #eee;
+    }
+    #importData {
+      margin-left: 10px;
+      padding: 8px 16px;
+    }
+  </style>
 </head>
 <body>
-  <h1>ID Production Monitoring</h1>
-  <div class="user-input">
-    <div>
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" />
-    </div>
-    <div>
-      <label for="course">Course:</label>
-      <input type="text" id="course" />
-    </div>
-    <div>
-      <label for="status">Status:</label>
-      <input type="text" id="status" />
-    </div>
-    <button id="insert">Insert</button>
-    <button id="read">Search</button>
-    <button id="update">Update</button>
-    <button id="delete">Delete</button>
-    <input type="file" id="importFile" accept=".csv" />
- <input type="file" id="importFile" accept=".csv" />
-<button id="importData">Import CSV</button>
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Course</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody id="studentTableBody"></tbody>
-</table>
 
-  </div>
+  <h1>Import Excel Data to Firebase</h1>
 
-  <h2>Students List</h2>
-  <button id="showStudents">Show Students</button>
-  <table>
-    <thead>
-      <tr>
-        <th>Full Name</th>
-        <th>Course</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody id="studentTableBody"></tbody>
-  </table>
-  <button id="exportToExcel">Export to Excel</button>
+  <section>
+    <label for="excelFile">Choose Excel File:</label>
+    <input type="file" id="excelFile" accept=".xlsx,.xls" />
+    <button id="importData">Import Data</button>
+  </section>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <section>
+    <h2>Students List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>Course</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="studentTableBody"></tbody>
+    </table>
+  </section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
+  <!-- Firebase and Libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
   <script src="fireConfig.js"></script>
-
   <script src="myscript.js"></script>
 </body>
 </html>
