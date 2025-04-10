@@ -12,10 +12,59 @@
       background-color: #f8f9fa;
       margin: 0;
       padding: 0;
+      display: flex;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 250px;
+      background-color: #003366;
+      padding: 1rem;
+      color: white;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      z-index: 10;
+    }
+
+    .sidebar button {
+      background-color: #003366;
+      color: white;
+      border: none;
+      padding: 1rem;
+      text-align: left;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar button:hover {
+      background-color: #00509e;
+    }
+
+    .sidebar input[type="file"] {
+      background-color: #003366;
+      color: white;
+      border: none;
+      padding: 1rem;
+      margin-top: 1rem;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 4px;
     }
 
     .container {
+      margin-left: 260px;
       padding: 2rem;
+      width: 100%;
+      transition: margin-left 0.3s ease;
     }
 
     h1, h2 {
@@ -77,12 +126,22 @@
       background-color: #e9ecef;
     }
 
-    #selectAll {
-      transform: scale(1.2);
-    }
-
     /* Responsive Design */
     @media screen and (max-width: 768px) {
+      .sidebar {
+        position: absolute;
+        left: -250px;
+        transition: left 0.3s ease;
+      }
+
+      .sidebar.open {
+        left: 0;
+      }
+
+      .container {
+        margin-left: 0;
+      }
+
       .user-input {
         flex-direction: column;
         align-items: stretch;
@@ -98,10 +157,6 @@
         margin: 0.5rem 0;
       }
 
-      .container {
-        padding: 1rem;
-      }
-
       table {
         font-size: 0.9rem;
       }
@@ -114,33 +169,17 @@
         margin-top: 1rem;
       }
 
-      /* Sidebar styles for small screens */
-      .user-input {
-        flex-direction: column;
-      }
-
-      .button-sidebar {
-        display: flex;
-        flex-direction: column;
+      .toggle-sidebar {
+        display: block;
         position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
+        top: 10px;
+        left: 10px;
         background-color: #003366;
-        width: 250px;
+        color: white;
         padding: 1rem;
-        z-index: 10;
-        justify-content: flex-start;
-      }
-
-      .button-sidebar button {
-        margin-bottom: 1rem;
-        width: 100%;
-      }
-
-      /* Shift content to the right */
-      .container {
-        margin-left: 260px;
+        border: none;
+        cursor: pointer;
+        z-index: 20;
       }
     }
 
@@ -156,7 +195,7 @@
   </style>
 </head>
 <body>
-  <div class="button-sidebar">
+  <div class="sidebar">
     <button id="insert">Insert</button>
     <button id="read">Search</button>
     <button id="update">Update</button>
@@ -164,7 +203,7 @@
     <input type="file" id="importFile" accept=".csv" />
     <button id="importData">Import Data</button>
     <button id="showStudents">Show Students</button>
-
+    <button id="deleteSelected">Delete Selected</button>
     <button id="exportToExcel">Export to Excel</button>
   </div>
 
@@ -197,6 +236,17 @@
       <tbody id="studentTableBody"></tbody>
     </table>
   </div>
+
+  <button class="toggle-sidebar">☰</button>
+
+  <script>
+    const toggleButton = document.querySelector('.toggle-sidebar');
+    const sidebar = document.querySelector('.sidebar');
+    
+    toggleButton.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+  </script>
 
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
