@@ -87,7 +87,6 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 1rem;
       background-color: white;
     }
 
@@ -99,6 +98,13 @@
 
     th {
       background-color: #e9ecef;
+    }
+
+    /* Scrollable Table Container */
+    .table-container {
+      max-height: 300px;  /* Adjust as needed */
+      overflow-y: auto;   /* Enable vertical scrolling */
+      margin-top: 1rem;
     }
 
     /* Responsive Design */
@@ -172,16 +178,20 @@
     </div>
 
     <h2>Students List</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Full Name</th>
-          <th>Course</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="studentTableBody"></tbody>
-    </table>
+    
+    <!-- Scrollable Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Course</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="studentTableBody"></tbody>
+      </table>
+    </div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
