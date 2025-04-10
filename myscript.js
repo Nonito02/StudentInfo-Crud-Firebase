@@ -246,3 +246,5 @@ document.getElementById("showStudents").addEventListener("click", function() {
   // Show students logic (e.g., fetching from database, or if in Firebase, use Firebase SDK to fetch the data)
   // For example, here you can call a function to fetch data from Firebase or your database and then update the table
 });
+
+// Add logic for insert, update, delete, and other operations here as needed
