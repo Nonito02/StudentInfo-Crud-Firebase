@@ -9,14 +9,12 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-
 document.getElementById("export").onclick = function () {
-  var studentRef = firebase.database().ref("student");
+  var studentRef = firebase.database().ref("students"); // Changed to "students"
 
   studentRef.once("value", function (snapshot) {
     var students = snapshot.val();
     if (students) {
-     
       var data = [];
 
       // Adding headers: Name, Course, and Status
@@ -42,3 +40,4 @@ document.getElementById("export").onclick = function () {
     }
   });
 };
+
