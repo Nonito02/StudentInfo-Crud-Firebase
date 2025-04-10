@@ -148,25 +148,29 @@
       <button id="read">Search</button>
     </div>
 
+       <div class="table-actions">
+      <button id="showStudents">Show Students</button>
+      <button id="deleteSelected">Delete Selected</button>
+      <button id="exportToExcel">Export to Excel</button>
+    </div>
+    
     <!-- Table -->
     <table>
       <thead>
         <tr>
-          <th><input type="checkbox" id="selectAll" /></th>
+         
           <th>Full Name</th>
           <th>Course</th>
           <th>Status</th>
+ <th><input type="checkbox" id="selectAll" /></th>
+          
         </tr>
       </thead>
       <tbody id="studentTableBody"></tbody>
     </table>
 
     <!-- Table Actions -->
-    <div class="table-actions">
-      <button id="showStudents">Show Students</button>
-      <button id="deleteSelected">Delete Selected</button>
-      <button id="exportToExcel">Export to Excel</button>
-    </div>
+ 
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
