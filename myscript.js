@@ -1,5 +1,9 @@
 <script>
-  const studentRef = firebase.database().ref("student");
+  // Initialize Firestore and Realtime Database
+  const db = firebase.firestore();
+  const studentRefFirestore = db.collection("student"); // Firestore reference
+  const studentRefRealtime = firebase.database().ref("newStudentTable"); // Realtime Database reference (using a different path)
+
   let importedStudents = []; // Holds previewed data
 
   // Function to add a student row to the table for preview
@@ -56,27 +60,33 @@
     reader.readAsArrayBuffer(fileInput.files[0]);
   });
 
-  // Insert data into Firebase when 'Insert All to Firebase' is clicked
+  // Insert data into Firestore and Realtime Database when 'Insert All to Firebase' is clicked
   document.getElementById("insertAll").addEventListener("click", async () => {
     if (!importedStudents.length) {
       return alert("No data to insert.");
     }
 
-    let success = 0;
+    let successFirestore = 0;
+    let successRealtime = 0;
     let failed = 0;
 
     for (const student of importedStudents) {
       try {
-        // Insert each student into Firebase
-        await studentRef.push(student);
-        success++;
+        // Insert each student into Firestore
+        await studentRefFirestore.add(student);
+        successFirestore++;
+
+        // Insert each student into Firebase Realtime Database under a different table
+        await studentRefRealtime.push(student);
+        successRealtime++;
+
       } catch (error) {
         console.error("Insert error:", error);
         failed++;
       }
     }
 
-    alert(`Insert completed!\nSuccess: ${success}\nFailed: ${failed}`);
+    alert(`Insert completed!\nFirestore Success: ${successFirestore}\nRealtime Success: ${successRealtime}\nFailed: ${failed}`);
     document.getElementById("insertAll").style.display = "none";
     importedStudents = []; // Reset the imported data after insertion
     document.getElementById("studentTableBody").innerHTML = ""; // Clear preview table
