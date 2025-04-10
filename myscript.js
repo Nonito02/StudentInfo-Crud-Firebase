@@ -12,20 +12,33 @@ function readForm() {
 document.getElementById("insert").onclick = function () {
   readForm();
 
+  // Ensure fields are filled
+  if (!nameV || !courseV || !statusV) {
+    alert("All fields are required!");
+    return;
+  }
+
+  // Reference the Firebase database to check if the student exists
   var studentRef = firebase.database().ref("students").orderByChild("name").equalTo(nameV);
   studentRef.once("value").then(function(snapshot) {
     if (snapshot.exists()) {
       alert("This student is already on the list.");
     } else {
-      var newStudentRef = firebase.database().ref("students").push(); // Changed to "students"
+      // Add the new student data
+      var newStudentRef = firebase.database().ref("students").push();
       newStudentRef.set({
         name: nameV,
         course: courseV,
         status: statusV
+      }, function(error) {
+        if (error) {
+          console.error("Error inserting data:", error);
+          alert("There was an error inserting the data.");
+        } else {
+          alert("Data Inserted");
+          clearForm();
+        }
       });
-      alert("Data Inserted");
-
-      clearForm();
     }
   });
 };
