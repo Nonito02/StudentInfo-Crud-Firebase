@@ -12,12 +12,12 @@ function readForm() {
 document.getElementById("insert").onclick = function () {
   readForm();
 
-  var studentRef = firebase.database().ref("student").orderByChild("name").equalTo(nameV);
+  var studentRef = firebase.database().ref("students").orderByChild("name").equalTo(nameV);
   studentRef.once("value").then(function(snapshot) {
     if (snapshot.exists()) {
       alert("This student is already on the list.");
     } else {
-      var newStudentRef = firebase.database().ref("student").push();
+      var newStudentRef = firebase.database().ref("students").push(); // Changed to "students"
       newStudentRef.set({
         name: nameV,
         course: courseV,
@@ -34,7 +34,7 @@ document.getElementById("insert").onclick = function () {
 document.getElementById("read").onclick = function () {
   readForm();
 
-  firebase.database().ref("student").orderByChild("name").equalTo(nameV).once("value")
+  firebase.database().ref("students").orderByChild("name").equalTo(nameV).once("value")
     .then(function(snapshot) {
       var data = snapshot.val();
       if (data) {
@@ -57,7 +57,7 @@ document.getElementById("read").onclick = function () {
 document.getElementById("update").onclick = function () {
   readForm();
 
-  firebase.database().ref("student").orderByChild("name").equalTo(nameV).once("value")
+  firebase.database().ref("students").orderByChild("name").equalTo(nameV).once("value")
     .then(function(snapshot) {
       snapshot.forEach(function(data) {
         data.ref.update({
@@ -74,7 +74,7 @@ document.getElementById("update").onclick = function () {
 document.getElementById("delete").onclick = function () {
   readForm();
 
-  firebase.database().ref("student").orderByChild("name").equalTo(nameV).once("value")
+  firebase.database().ref("students").orderByChild("name").equalTo(nameV).once("value")
     .then(function(snapshot) {
       snapshot.forEach(function(data) {
         data.ref.remove();
@@ -92,7 +92,7 @@ document.getElementById("showStudents").onclick = function () {
   // Clear existing table body
   document.getElementById("studentTableBody").innerHTML = "";
 
-  var studentRef = firebase.database().ref("student");
+  var studentRef = firebase.database().ref("students"); // Changed to "students"
 
   studentRef.once("value", function(snapshot) {
     var students = snapshot.val();
@@ -158,7 +158,7 @@ document.getElementById("importData").onclick = function () {
 
         students.forEach(function (student) {
           if (student.name && student.course && student.status) {
-            var newStudentRef = firebase.database().ref("student").push();
+            var newStudentRef = firebase.database().ref("students").push(); // Changed to "students"
             newStudentRef.set({
               name: student.name,
               course: student.course,
@@ -168,7 +168,6 @@ document.getElementById("importData").onclick = function () {
         });
 
         alert("Data imported successfully!");
-
       },
       error: function (error) {
         console.error("Error parsing CSV:", error);
