@@ -16,22 +16,22 @@
 
     .container {
       padding: 2rem;
-      max-width: 1200px;
-      margin: auto;
+
+
     }
 
     h1, h2 {
       color: #0d3b66;
     }
 
-    .form-group {
+    .user-input {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
 
-    .form-group div {
+    .user-input div {
       flex: 1 1 200px;
     }
 
@@ -48,12 +48,12 @@
       border-radius: 4px;
     }
 
-    .btn-group {
-      display: flex;
-      align-items: flex-end;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
+
+
+
+
+
+
 
     button {
       padding: 0.6rem 1.2rem;
@@ -62,24 +62,25 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      margin: 0.25rem;
     }
 
     button:hover {
       background-color: #00509e;
     }
 
-    .search-bar {
-      margin-top: 2rem;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
 
-    .search-bar input[type="text"] {
-      width: 200px;
-    }
+
+
+
+
+
+
+
+
+
+
+
 
     table {
       width: 100%;
@@ -102,41 +103,20 @@
       transform: scale(1.2);
     }
 
-    .table-actions {
-      margin-top: 1rem;
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
 
-    /* Pagination Styles */
-    .pagination {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
 
-    .pagination button {
-      padding: 0.5rem 1rem;
-      background-color: #003366;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
 
-    .pagination button:hover {
-      background-color: #00509e;
-    }
+
+
+
   </style>
 </head>
 <body>
   <div class="container">
     <h1>ID Production Monitoring</h1>
+    <div class="user-input">
 
-    <!-- Form Input Section -->
-    <div class="form-group">
+
       <div>
         <label for="name">Full Name:</label>
         <input type="text" id="name" />
@@ -149,35 +129,32 @@
         <label for="status">Status:</label>
         <input type="text" id="status" />
       </div>
-      <div class="btn-group">
+      <div style="display: flex; align-items: flex-end; gap: 0.5rem; flex-wrap: wrap;">
         <button id="insert">Insert</button>
+        <button id="read">Search</button>
         <button id="update">Update</button>
         <button id="delete">Delete</button>
       </div>
-      <div>
-        <label for="importFile">Import CSV:</label>
+      <div style="display: flex; flex-direction: column;">
+
         <input type="file" id="importFile" accept=".csv" />
         <button id="importData">Import Data</button>
       </div>
     </div>
 
     <h2>Students List</h2>
+    <button id="showStudents">Show Students</button>
 
-    <!-- Search Bar -->
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search by name or course" />
-      <button id="read">Search</button>
-    </div>
 
-    <div class="table-actions">
-      <button id="showStudents">Show Students</button>
-      <button id="exportToExcel">Export to Excel</button>
-    </div>
-    
-    <!-- Table -->
+
+
+
+
+
     <table>
       <thead>
         <tr>
+          <th><input type="checkbox" id="selectAll" /></th>
           <th>Full Name</th>
           <th>Course</th>
           <th>Status</th>
@@ -185,12 +162,13 @@
       </thead>
       <tbody id="studentTableBody"></tbody>
     </table>
+    <button id="deleteSelected">Delete Selected</button>
+    <button id="exportToExcel">Export to Excel</button>
 
-    <!-- Pagination -->
-    <div class="pagination" id="pagination">
-      <button id="prevPage">Previous</button>
-      <button id="nextPage">Next</button>
-    </div>
+
+
+
+
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
@@ -198,68 +176,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
   <script src="fireConfig.js"></script>
   <script src="myscript.js"></script>
-
-  <script>
-    // JavaScript for handling table pagination and actions
-
-    let studentsData = [];  // This will hold the student data
-    let currentPage = 1;
-    const recordsPerPage = 20;
-
-    document.getElementById('showStudents').addEventListener('click', showStudents);
-    document.getElementById('nextPage').addEventListener('click', nextPage);
-    document.getElementById('prevPage').addEventListener('click', prevPage);
-    document.getElementById('exportToExcel').addEventListener('click', exportToExcel);
-
-    // Fetch the data to be displayed
-    function showStudents() {
-      // You can replace this with actual data fetching logic (e.g., from Firebase or a database)
-      studentsData = [
-        { name: 'John Doe', course: 'Computer Science', status: 'Pending' },
-        { name: 'Jane Smith', course: 'Business Administration', status: 'Ready to Claim' },
-        // Add more mock data here...
-      ];
-      displayStudents(currentPage);
-    }
-
-    // Display students with pagination
-    function displayStudents(page) {
-      const startIndex = (page - 1) * recordsPerPage;
-      const endIndex = startIndex + recordsPerPage;
-      const currentStudents = studentsData.slice(startIndex, endIndex);
-
-      const tableBody = document.getElementById('studentTableBody');
-      tableBody.innerHTML = '';
-
-      currentStudents.forEach(student => {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>${student.name}</td><td>${student.course}</td><td>${student.status}</td>`;
-        tableBody.appendChild(row);
-      });
-    }
-
-    // Handle "Next" button click
-    function nextPage() {
-      if (currentPage * recordsPerPage < studentsData.length) {
-        currentPage++;
-        displayStudents(currentPage);
-      }
-    }
-
-    // Handle "Previous" button click
-    function prevPage() {
-      if (currentPage > 1) {
-        currentPage--;
-        displayStudents(currentPage);
-      }
-    }
-
-    // Export table to Excel
-    function exportToExcel() {
-      const table = document.querySelector('table');
-      const wb = XLSX.utils.table_to_book(table, { sheet: 'Students' });
-      XLSX.writeFile(wb, 'students.xlsx');
-    }
-  </script>
 </body>
 </html>
