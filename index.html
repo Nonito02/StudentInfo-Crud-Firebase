@@ -7,168 +7,26 @@
   <title>ID Production Monitoring</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-size: 1rem; /* Increase base font size */
-    }
-
-    /* Container Styles */
-    .container {
-      width: 100%;
-      max-width: 1000px; /* Limit container width on large screens */
-      padding: 2rem;
-      box-sizing: border-box;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    h1, h2 {
-      color: #0d3b66;
-      text-align: center;
-      font-size: 2rem; /* Increase font size for headers */
-    }
-
-    /* Compact button styles */
-    .button-container {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      justify-content: center;
-    }
-
-    .button-container button {
-      padding: 0.6rem 1.2rem; /* Increase padding for buttons */
-      background-color: #003366;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1rem; /* Increase font size for buttons */
-    }
-
-    .button-container button:hover {
-      background-color: #00509e;
-    }
-
-    /* Form Styles */
-    .user-input {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.2rem; /* Increase gap between form elements */
-      margin-bottom: 2rem;
-      justify-content: center;
-    }
-
-    .user-input div {
-      flex: 1 1 200px;
-      max-width: 300px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 0.6rem; /* Increase margin for labels */
-      font-weight: bold;
-      font-size: 1rem; /* Increase font size for labels */
-    }
-
-    input[type="text"], input[type="file"] {
-      width: 100%;
-      padding: 0.8rem; /* Increase padding for inputs */
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem; /* Increase font size for inputs */
-    }
-
-    /* Table Styles */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: white;
-    }
-
-    th, td {
-      padding: 1rem; /* Increase padding for table cells */
-      border: 1px solid #ccc;
-      text-align: left;
-      font-size: 1rem; /* Increase font size for table content */
-    }
-
-    th {
-      background-color: #e9ecef;
-    }
-
-    /* Scrollable Table Container */
-    .table-container {
-      max-height: 300px;  /* Adjust as needed */
-      overflow-y: auto;   /* Enable vertical scrolling */
-      margin-top: 1rem;
-    }
-
-    /* Responsive Design */
-    @media screen and (max-width: 768px) {
-      .container {
-        padding: 1.5rem;
-      }
-
-      .user-input {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .user-input div {
-        flex: 1 1 100%;
-      }
-
-      button {
-        width: 100%;
-        padding: 1rem;
-        margin: 0.5rem 0;
-        font-size: 1rem;
-      }
-
-      table {
-        font-size: 1rem;
-      }
-    }
-
-    @media screen and (max-width: 480px) {
-      h1, h2 {
-        font-size: 1.75rem; /* Slightly decrease size for smaller screens */
-      }
-
-      button {
-        font-size: 1rem;
-      }
-    }
+    /* Your existing CSS */
   </style>
 </head>
 <body>
   <div class="container">
     <h1>ID Production Monitoring</h1>
 
-    <!-- Compact Buttons -->
+    <!-- Buttons for CRUD operations -->
     <div class="button-container">
       <button id="insert">Insert</button>
       <button id="read">Search</button>
       <button id="update">Update</button>
       <button id="delete">Delete</button>
-      
-    
-      
     </div>
 
-      <div class="action-buttons">
-        <input type="file" id="importFile" accept=".csv" />
-        <button id="importData">Import Data</button>
-      </div>
+    <!-- Import Data Section -->
+    <div class="action-buttons">
+      <input type="file" id="importFile" accept=".csv" />
+      <button id="importData">Import Data</button>
+    </div>
 
     <!-- User Input Form -->
     <div class="user-input">
@@ -186,13 +44,13 @@
       </div>
     </div>
 
+    <!-- Show Students Button -->
     <div class="button-container">
       <button id="showStudents">Show Students</button>
-      <button id="importFromExcel">Import from Excel</button> <!-- Changed text here -->
     </div>
 
     <h2>Students List</h2>
-    
+
     <!-- Scrollable Table -->
     <div class="table-container">
       <table>
@@ -208,10 +66,12 @@
     </div>
   </div>
 
+  <!-- Firebase, PapaParse, and XLSX Scripts -->
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
   <script src="fireConfig.js"></script>
   <script src="myscript.js"></script>
+
 </body>
 </html>
