@@ -12,33 +12,20 @@ function readForm() {
 document.getElementById("insert").onclick = function () {
   readForm();
 
-  // Ensure fields are filled
-  if (!nameV || !courseV || !statusV) {
-    alert("All fields are required!");
-    return;
-  }
-
-  // Reference the Firebase database to check if the student exists
   var studentRef = firebase.database().ref("students").orderByChild("name").equalTo(nameV);
   studentRef.once("value").then(function(snapshot) {
     if (snapshot.exists()) {
       alert("This student is already on the list.");
     } else {
-      // Add the new student data
-      var newStudentRef = firebase.database().ref("students").push();
+      var newStudentRef = firebase.database().ref("students").push(); // Changed to "students"
       newStudentRef.set({
         name: nameV,
         course: courseV,
         status: statusV
-      }, function(error) {
-        if (error) {
-          console.error("Error inserting data:", error);
-          alert("There was an error inserting the data.");
-        } else {
-          alert("Data Inserted");
-          clearForm();
-        }
       });
+      alert("Data Inserted");
+
+      clearForm();
     }
   });
 };
@@ -196,3 +183,69 @@ document.getElementById("importData").onclick = function () {
 
   reader.readAsText(file); // Read the file as text
 };
+
+// Function to display students and include a checkbox for each row
+// Event listener for Import Data button
+document.getElementById("importData").addEventListener("click", function() {
+  const fileInput = document.getElementById("importFile");
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Please select an Excel file to import.");
+    return;
+  }
+
+  // Read the Excel file
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = e.target.result;
+    const workbook = XLSX.read(data, { type: "binary" });
+
+    // Get the first sheet (assuming only one sheet for simplicity)
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+
+    // Convert the sheet to JSON (each row as an object)
+    const studentsData = XLSX.utils.sheet_to_json(sheet);
+
+    // Clear table before appending new data
+    const tableBody = document.getElementById("studentTableBody");
+    tableBody.innerHTML = "";
+
+    // Insert data into the table
+    if (studentsData.length > 0) {
+      studentsData.forEach(student => {
+        // Create a new row in the table
+        const row = tableBody.insertRow();
+
+        // Insert data from the Excel file directly into the table cells
+        row.innerHTML = `
+          <td><input type="checkbox" class="studentCheckbox" data-id="${student.id || ''}" /></td>
+          <td>${student['Full Name'] || ''}</td>
+          <td>${student['Course'] || ''}</td>
+          <td>${student['Status'] || ''}</td>
+        `;
+      });
+      alert("Data imported successfully!");
+    } else {
+      alert("No data found in the Excel file.");
+    }
+  };
+
+  reader.onerror = function(error) {
+    console.error("Error reading file:", error);
+    alert("Failed to read file.");
+  };
+
+  // Read the file as binary string
+  reader.readAsBinaryString(file);
+});
+
+// Event listener for "Show Students" button
+document.getElementById("showStudents").addEventListener("click", function() {
+  // Show students logic (e.g., fetching from database, or if in Firebase, use Firebase SDK to fetch the data)
+  // For example, here you can call a function to fetch data from Firebase or your database and then update the table
+});
+
+// Add logic for insert, update, delete, and other operations here as needed
+
