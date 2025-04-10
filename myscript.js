@@ -1,94 +1,197 @@
-<script>
-  // Initialize Firestore and Realtime Database
-  const db = firebase.firestore();
-  const studentRefFirestore = db.collection("student"); // Firestore reference
-  const studentRefRealtime = firebase.database().ref("newStudentTable"); // Realtime Database reference (using a different path)
+// Import function for CSV file
+document.getElementById("importData").onclick = function () {
+  var fileInput = document.getElementById("importFile");
 
-  let importedStudents = []; // Holds previewed data
 
-  // Function to add a student row to the table for preview
-  function addStudentRow(student) {
-    const tableBody = document.getElementById("studentTableBody");
-    const row = tableBody.insertRow();
-    row.insertCell(0).innerText = student.name || "";
-    row.insertCell(1).innerText = student.course || "";
-    row.insertCell(2).innerText = student.status || "";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  if (fileInput.files.length === 0) {
+    alert("Please select a file to import.");
+    return;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
 
-  // Preview data only (don't insert yet)
-  document.getElementById("importData").addEventListener("click", () => {
-    const fileInput = document.getElementById("excelFile");
-    const tableBody = document.getElementById("studentTableBody");
 
-    if (!fileInput.files.length) {
-      return alert("Please select an Excel file.");
-    }
+  var file = fileInput.files[0];
+  var reader = new FileReader();
 
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      const data = new Uint8Array(e.target.result);
-      const workbook = XLSX.read(data, { type: "array" });
 
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const students = XLSX.utils.sheet_to_json(sheet);
 
-      // Clear previous data in the table
-      tableBody.innerHTML = "";
-      importedStudents = [];
+  reader.onload = function (e) {
+    var csvData = e.target.result;
 
-      students.forEach(student => {
-        if (student.name && student.course && student.status) {
-          importedStudents.push(student);
-          addStudentRow(student);
-        }
-      });
 
-      if (importedStudents.length > 0) {
-        alert("Data previewed successfully! Click 'Insert All to Firebase' to upload.");
-        document.getElementById("insertAll").style.display = "inline-block";
-      } else {
-        alert("No valid data found.");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Parse CSV using PapaParse
+    Papa.parse(csvData, {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      header: true,
+      skipEmptyLines: true,
+      dynamicTyping: true,
+      complete: function (results) {
+        var students = results.data;
+
+        // Clear table first
+        document.getElementById("studentTableBody").innerHTML = "";
+
+        students.forEach(function (student) {
+          // Check required fields
+          if (student.name && student.course && student.status) {
+            // Push to Firebase
+            var newStudentRef = firebase.database().ref("student").push();
+            newStudentRef.set({
+              name: student.name,
+              course: student.course,
+              status: student.status
+            });
+
+            // Realtime update table
+            var tableBody = document.getElementById("studentTableBody");
+            var row = tableBody.insertRow();
+
+            var cell1 = row.insertCell(0); // Name
+            var cell2 = row.insertCell(1); // Course
+            var cell3 = row.insertCell(2); // Status
+
+            cell1.innerHTML = student.name;
+            cell2.innerHTML = student.course;
+            cell3.innerHTML = student.status;
+          }
+        });
+
+        alert("CSV data imported and synced to Firebase successfully!");
+      },
+      error: function (error) {
+        console.error("Error parsing CSV:", error);
+        alert("Error processing the CSV file.");
       }
-    };
+    });
+  };
 
-    reader.onerror = function (error) {
-      console.error("File Error:", error);
-      alert("Error reading the Excel file.");
-    };
+  reader.onerror = function (error) {
+    console.error("Error reading file:", error);
+    alert("Error reading the selected file.");
+  };
 
-    reader.readAsArrayBuffer(fileInput.files[0]);
-  });
-
-  // Insert data into Firestore and Realtime Database when 'Insert All to Firebase' is clicked
-  document.getElementById("insertAll").addEventListener("click", async () => {
-    if (!importedStudents.length) {
-      return alert("No data to insert.");
-    }
-
-    let successFirestore = 0;
-    let successRealtime = 0;
-    let failed = 0;
-
-    for (const student of importedStudents) {
-      try {
-        // Insert each student into Firestore
-        await studentRefFirestore.add(student);
-        successFirestore++;
-
-        // Insert each student into Firebase Realtime Database under a different table
-        await studentRefRealtime.push(student);
-        successRealtime++;
-
-      } catch (error) {
-        console.error("Insert error:", error);
-        failed++;
-      }
-    }
-
-    alert(`Insert completed!\nFirestore Success: ${successFirestore}\nRealtime Success: ${successRealtime}\nFailed: ${failed}`);
-    document.getElementById("insertAll").style.display = "none";
-    importedStudents = []; // Reset the imported data after insertion
-    document.getElementById("studentTableBody").innerHTML = ""; // Clear preview table
-  });
-</script>
+  reader.readAsText(file);
+};
