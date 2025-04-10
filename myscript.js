@@ -1,5 +1,5 @@
 // Define global variables
-var nameV, courseV, statusV;
+let nameV, courseV, statusV;
 
 // Read form values
 function readForm() {
@@ -21,19 +21,19 @@ function showStudentTable() {
   clearForm();
   document.getElementById("studentTableBody").innerHTML = "";
 
-  var studentRef = firebase.database().ref("students");
+  const studentRef = firebase.database().ref("students");
 
-  studentRef.once("value", function(snapshot) {
-    var students = snapshot.val();
+  studentRef.once("value", (snapshot) => {
+    const students = snapshot.val();
     if (students) {
-      var tableBody = document.getElementById("studentTableBody");
-      for (var id in students) {
-        var student = students[id];
-        var row = tableBody.insertRow();
+      const tableBody = document.getElementById("studentTableBody");
+      for (const id in students) {
+        const student = students[id];
+        const row = tableBody.insertRow();
 
-        var cell1 = row.insertCell(0); // Name
-        var cell2 = row.insertCell(1); // Course
-        var cell3 = row.insertCell(2); // Status
+        const cell1 = row.insertCell(0); // Name
+        const cell2 = row.insertCell(1); // Course
+        const cell3 = row.insertCell(2); // Status
 
         cell1.innerHTML = student.name;
         cell2.innerHTML = student.course;
@@ -48,12 +48,12 @@ function showStudentTable() {
 // INSERT
 document.getElementById("insert").onclick = function () {
   readForm();
-  var studentRef = firebase.database().ref("students").orderByChild("name").equalTo(nameV);
-  studentRef.once("value").then(function(snapshot) {
+  const studentRef = firebase.database().ref("students").orderByChild("name").equalTo(nameV);
+  studentRef.once("value").then((snapshot) => {
     if (snapshot.exists()) {
       alert("This student is already on the list.");
     } else {
-      var newStudentRef = firebase.database().ref("students").push();
+      const newStudentRef = firebase.database().ref("students").push();
       newStudentRef.set({
         name: nameV,
         course: courseV,
@@ -70,11 +70,11 @@ document.getElementById("insert").onclick = function () {
 document.getElementById("read").onclick = function () {
   readForm();
   firebase.database().ref("students").orderByChild("name").equalTo(nameV).once("value")
-    .then(function(snapshot) {
-      var data = snapshot.val();
+    .then((snapshot) => {
+      const data = snapshot.val();
       if (data) {
-        for (var key in data) {
-          var student = data[key];
+        for (const key in data) {
+          const student = data[key];
           document.getElementById("course").value = student.course;
           document.getElementById("status").value = student.status;
         }
@@ -83,7 +83,7 @@ document.getElementById("read").onclick = function () {
         alert("No student found with the provided name.");
       }
     })
-    .catch(function(error) {
+    .catch((error) => {
       console.error("Error retrieving data: ", error);
     });
 };
@@ -92,8 +92,8 @@ document.getElementById("read").onclick = function () {
 document.getElementById("update").onclick = function () {
   readForm();
   firebase.database().ref("students").orderByChild("name").equalTo(nameV).once("value")
-    .then(function(snapshot) {
-      snapshot.forEach(function(data) {
+    .then((snapshot) => {
+      snapshot.forEach((data) => {
         data.ref.update({
           course: courseV,
           status: statusV
@@ -109,8 +109,8 @@ document.getElementById("update").onclick = function () {
 document.getElementById("delete").onclick = function () {
   readForm();
   firebase.database().ref("students").orderByChild("name").equalTo(nameV).once("value")
-    .then(function(snapshot) {
-      snapshot.forEach(function(data) {
+    .then((snapshot) => {
+      snapshot.forEach((data) => {
         data.ref.remove();
       });
       alert("Data Deleted");
@@ -124,36 +124,36 @@ document.getElementById("showStudents").onclick = showStudentTable;
 
 // EXPORT TO EXCEL
 document.getElementById("exportToExcel").onclick = function () {
-  var table = document.getElementById("studentTableBody");
-  var wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+  const table = document.getElementById("studentTableBody");
+  const wb = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
   XLSX.writeFile(wb, "students.xlsx");
 };
 
 // IMPORT CSV AND DISPLAY
 document.getElementById("importData").onclick = function () {
-  var fileInput = document.getElementById("importFile");
+  const fileInput = document.getElementById("importFile");
 
   if (fileInput.files.length === 0) {
     alert("Please select a file to import.");
     return;
   }
 
-  var file = fileInput.files[0];
-  var reader = new FileReader();
+  const file = fileInput.files[0];
+  const reader = new FileReader();
 
   reader.onload = function (e) {
-    var csvData = e.target.result;
+    const csvData = e.target.result;
 
     Papa.parse(csvData, {
       header: true,
       skipEmptyLines: true,
       dynamicTyping: true,
       complete: function (results) {
-        var students = results.data;
+        const students = results.data;
 
         students.forEach(function (student) {
           if (student.name && student.course && student.status) {
-            var newStudentRef = firebase.database().ref("students").push();
+            const newStudentRef = firebase.database().ref("students").push();
             newStudentRef.set({
               name: student.name,
               course: student.course,
