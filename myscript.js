@@ -261,7 +261,6 @@ document.getElementById("showStudents").addEventListener("click", function () {
 });
 
 
-// Function to handle Excel file import, display in table, and insert into Firebase
 document.getElementById("importData").addEventListener("click", function() {
   const fileInput = document.getElementById("importFile");
   const file = fileInput.files[0];
@@ -288,30 +287,18 @@ document.getElementById("importData").addEventListener("click", function() {
     const tableBody = document.getElementById("studentTableBody");
     tableBody.innerHTML = "";
 
-    // Insert data into Firebase and display in the table
+    // Insert data into the table
     if (studentsData.length > 0) {
       studentsData.forEach(student => {
-        // Insert into Firebase
-        const studentRef = firebase.database().ref("students").push();
-        studentRef.set({
-          name: student['name'] || "N/A",      // Adjusted to use the actual 'name' from the Excel file
-          course: student['course'] || "N/A",  // Adjusted to use the actual 'course' from the Excel file
-          status: student['status'] || "Pending" // Adjusted to use the actual 'status' from the Excel file
-        })
-        .then(() => {
-          console.log("Student added:", student.name);
-        })
-        .catch(error => {
-          console.error("Error adding student:", error);
-        });
-
         // Create a new row in the table
         const row = tableBody.insertRow();
+
+        // Insert data from the Excel file directly into the table cells
         row.innerHTML = `
-          <td><input type="checkbox" class="studentCheckbox" data-id="${studentRef.key}" /></td>
-          <td>${student['name'] || "N/A"}</td>        <!-- Display the 'name' from Excel -->
-          <td>${student['course'] || "N/A"}</td>      <!-- Display the 'course' from Excel -->
-          <td>${student['status'] || "Pending"}</td>  <!-- Display the 'status' from Excel -->
+          <td><input type="checkbox" class="studentCheckbox" data-id="${student.id || ''}" /></td>
+          <td>${student['name'] || ''}</td>
+          <td>${student['course'] || ''}</td>
+          <td>${student['status'] || ''}</td>
         `;
       });
       alert("Data imported successfully!");
