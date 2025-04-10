@@ -6,252 +6,190 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ID PRODUCTION MONITORING</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
 
-    @import url('https://fonts.googleapis.com/css?family=Roboto:700');
 
-body {
-  margin:0px;
-  font-family:'Roboto';
-  text-align:center;
-}
 
-#container {
-  color:#999;
-  text-transform: uppercase;
-  font-size:36px;
-  font-weight:bold;
-  padding-top:200px;  
-  position:fixed;
-  width:100%;
-  bottom:45%;
-  display:block;
-}
 
-#flip {
-  height:50px;
-  overflow:hidden;
-}
 
-#flip > div > div {
-  color:#fff;
-  padding:4px 12px;
-  height:45px;
-  margin-bottom:45px;
-  display:inline-block;
-}
 
-#flip div:first-child {
-  animation: show 5s linear infinite;
-}
 
-#flip div div {
-  background:#42c58a;
-}
-#flip div:first-child div {
-  background:#4ec7f3;
-}
-#flip div:last-child div {
-  background:#DC143C;
-}
 
-@keyframes show {
-  0% {margin-top:-270px;}
-  5% {margin-top:-180px;}
-  33% {margin-top:-180px;}
-  38% {margin-top:-90px;}
-  66% {margin-top:-90px;}
-  71% {margin-top:0px;}
-  99.99% {margin-top:0px;}
-  100% {margin-top:-270px;}
-}
 
-p {
-  position:fixed;
-  width:100%;
-  bottom:30px;
-  font-size:12px;
-  color:#999;
-  margin-top:200px;
-}
-    /* General Styles */
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f7fc;
-      color: #333;
-    }
 
-    h1, h2 {
-      text-align: center;
-      color: #333;
-    }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
 
-    .user-input {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      margin-bottom: 30px;
-    }
 
-    .user-input div {
-      margin-bottom: 15px;
-    }
 
-    .user-input label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 5px;
-    }
 
-    .user-input input[type="text"],
-    .user-input input[type="file"] {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-    }
 
-    .user-input button {
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 12px 20px;
-      font-size: 16px;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: background-color 0.3s ease;
-    }
 
-    .user-input button:hover {
-      background-color: #0056b3;
-    }
 
-    /* Sticky Header */
-    table thead {
-      position: sticky;
-      top: 0;
-      background-color: #007bff;
-      color: white;
-      z-index: 1;
-    }
 
-    /* Table Styles */
-    table {
-      width: 100%;
-      margin-bottom: 20px;
-      border-collapse: collapse;
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
 
-    table th, table td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
 
-    table td {
-      background-color: #f9f9f9;
-    }
 
-    table tr:hover td {
-      background-color: #f1f1f1;
-    }
 
-    table th {
-      background-color: #007bff;
-      color: white;
-    }
 
-    table td:last-child {
-      text-align: center;
-    }
 
-    /* Button Styles for Actions */
-    .action-buttons {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 20px;
-    }
 
-    .action-buttons button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
 
-    .action-buttons button:hover {
-      background-color: #218838;
-    }
 
-    .action-buttons button#deleteSelected {
-      background-color: #dc3545;
-    }
 
-    .action-buttons button#deleteSelected:hover {
-      background-color: #c82333;
-    }
 
-    .action-buttons button#exportToExcel {
-      background-color: #ffc107;
-      color: black;
-    }
 
-    .action-buttons button#exportToExcel:hover {
-      background-color: #e0a800;
-    }
 
-    /* Responsive Styles */
-    @media (max-width: 768px) {
-      .container {
-        padding: 15px;
-      }
 
-      .user-input input[type="text"] {
-        font-size: 14px;
-        padding: 8px;
-      }
 
-      .user-input button {
-        padding: 10px;
-        font-size: 14px;
-      }
 
-      table th, table td {
-        padding: 8px;
-      }
 
-      .action-buttons {
-        flex-direction: column;
-        align-items: flex-start;
-      }
 
-      .action-buttons button {
-        margin-bottom: 10px;
-        width: 100%;
-      }
-    }
-  </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </head>
 <body>
+  <h1>ID Production Monitoring</h1>
+  <div class="user-input">
+    <div>
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" />
 
 
 
@@ -272,50 +210,10 @@ p {
 
 
 
-
-
-
-
-
-
-
-  <div class="container">
-<div id=container>
-  I 
-  <div id=flip>
-    <div><div>Owe</div></div>
-    <div><div>Hate</div></div>
-    <div><div>Love</div></div>
-  </div>
-  YOU!
-</div>
-
-<p>a css3 animation demo</p>
-    
-    <div class="user-input">
-      <div>
-        <label for="name">Full Name:</label>
-        <input type="text" id="name" placeholder="Enter full name" />
-      </div>
-      <div>
-        <label for="course">Course:</label>
-        <input type="text" id="course" placeholder="Enter course" />
-      </div>
-      <div>
-        <label for="status">Status:</label>
-        <input type="text" id="status" placeholder="Enter status" />
-      </div>
-      <div class="action-buttons">
-        <button id="insert">Insert</button>
-        <button id="read">Search</button>
-        <button id="update">Update</button>
-        <button id="delete">Delete</button>
-      </div>
-      <div class="action-buttons">
-        <input type="file" id="importFile" accept=".csv" />
-        <button id="importData">Import Data</button>
-      </div>
     </div>
+    <div>
+      <label for="course">Course:</label>
+      <input type="text" id="course" />
 
 
 
@@ -334,54 +232,52 @@ p {
 
 
 
-
-
-
-
-    <h2>Students List</h2>
-    <button id="showStudents">Show Students</button>
-
-    <table>
-      <thead>
-        <tr>
-          <th>
-            <input type="checkbox" id="selectAll" />
-          </th>
-          <th>Full Name</th>
-          <th>Course</th>
-          <th>Status</th>
-          <th>Actions</th> <!-- Add Actions column in header -->
-        </tr>
-      </thead>
-      <tbody id="studentTableBody"></tbody>
-    </table>
-
-    <div class="action-buttons">
-      <button id="deleteSelected">Delete Selected</button> <!-- Delete Selected Button -->
-      <button id="exportToExcel">Export to Excel</button>
     </div>
+    <div>
+      <label for="status">Status:</label>
+      <input type="text" id="status" />
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <button id="insert">Insert</button>
+    <button id="read">Search</button>
+    <button id="update">Update</button>
+    <button id="delete">Delete</button>
+    <input type="file" id="importFile" accept=".csv" />
+    <button id="importData">Import Data</button>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <h2>Students List</h2>
+  <button id="showStudents">Show Students</button>
+  <table>
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="selectAll" /></th> <!-- Select All checkbox -->
+        <th>Full Name</th>
+        <th>Course</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="studentTableBody"></tbody>
+  </table>
+  <button id="deleteSelected">Delete Selected</button> <!-- Delete Selected Button -->
+  <button id="exportToExcel">Export to Excel</button>
 
   <!-- Firebase and External Libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
