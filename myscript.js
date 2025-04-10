@@ -260,3 +260,57 @@ document.getElementById("showStudents").addEventListener("click", function () {
     });
 });
 
+// Function to handle Excel file import
+document.getElementById("importData").addEventListener("click", function() {
+  const fileInput = document.getElementById("importFile");
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Please select an Excel file to import.");
+    return;
+  }
+
+  // Read the Excel file
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = e.target.result;
+    const workbook = XLSX.read(data, { type: "binary" });
+
+    // Get the first sheet (assuming only one sheet for simplicity)
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+
+    // Convert the sheet to JSON (each row as an object)
+    const studentsData = XLSX.utils.sheet_to_json(sheet);
+
+    // Insert data into Firebase
+    if (studentsData.length > 0) {
+      studentsData.forEach(student => {
+        const studentRef = firebase.database().ref("students").push();
+        studentRef.set({
+          name: student['Full Name'] || "N/A",  // Adjust based on your Excel column name
+          course: student['Course'] || "N/A",    // Adjust based on your Excel column name
+          status: student['Status'] || "Pending" // Adjust based on your Excel column name
+        })
+        .then(() => {
+          console.log("Student added:", student.name);
+        })
+        .catch(error => {
+          console.error("Error adding student:", error);
+        });
+      });
+      alert("Data imported successfully!");
+    } else {
+      alert("No data found in the Excel file.");
+    }
+  };
+
+  reader.onerror = function(error) {
+    console.error("Error reading file:", error);
+    alert("Failed to read file.");
+  };
+
+  // Read the file as binary string
+  reader.readAsBinaryString(file);
+});
+
