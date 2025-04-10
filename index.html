@@ -5,279 +5,57 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ID PRODUCTION MONITORING</title>
-  <link rel="stylesheet" href="style.css" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </head>
-<body>
-  <h1>ID Production Monitoring</h1>
-  <div class="user-input">
-    <div>
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" />
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333;">
 
+  <h1 style="text-align: center; margin-top: 20px;">ID Production Monitoring</h1>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  <div class="user-input" style="max-width: 600px; margin: 20px auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+    <div style="margin-bottom: 15px;">
+      <label for="name" style="font-weight: bold; margin-bottom: 5px; display: block;">Full Name:</label>
+      <input type="text" id="name" style="width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" />
     </div>
-    <div>
-      <label for="course">Course:</label>
-      <input type="text" id="course" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <div style="margin-bottom: 15px;">
+      <label for="course" style="font-weight: bold; margin-bottom: 5px; display: block;">Course:</label>
+      <input type="text" id="course" style="width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" />
     </div>
-    <div>
-      <label for="status">Status:</label>
-      <input type="text" id="status" />
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    <div style="margin-bottom: 15px;">
+      <label for="status" style="font-weight: bold; margin-bottom: 5px; display: block;">Status:</label>
+      <input type="text" id="status" style="width: 100%; padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px;" />
     </div>
-    <button id="insert">Insert</button>
-    <button id="read">Search</button>
-    <button id="update">Update</button>
-    <button id="delete">Delete</button>
-    <input type="file" id="importFile" accept=".csv" />
-    <button id="importData">Import Data</button>
+    <div style="text-align: center;">
+      <button id="insert" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px;">Insert</button>
+      <button id="read" style="background-color: #2196F3; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px;">Search</button>
+      <button id="update" style="background-color: #FF9800; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px;">Update</button>
+      <button id="delete" style="background-color: #f44336; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px;">Delete</button>
+      <input type="file" id="importFile" accept=".csv" style="margin: 10px 0;" />
+      <button id="importData" style="background-color: #9C27B0; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin-top: 10px;">Import Data</button>
+    </div>
   </div>
-  <h2>Students List</h2>
-  <button id="showStudents">Show Students</button>
-  <table>
+
+  <h2 style="text-align: center; margin-top: 40px;">Students List</h2>
+  <div style="text-align: center; margin-bottom: 20px;">
+    <button id="showStudents" style="background-color: #607D8B; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Show Students</button>
+  </div>
+
+  <table style="width: 90%; margin: 0 auto; border-collapse: collapse; background-color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
     <thead>
-      <tr>
-        <th><input type="checkbox" id="selectAll" /></th> <!-- Select All checkbox -->
-        <th>Full Name</th>
-        <th>Course</th>
-        <th>Status</th>
+      <tr style="background-color: #2196F3; color: white;">
+        <th style="padding: 10px; text-align: center;"><input type="checkbox" id="selectAll" /></th>
+        <th style="padding: 10px; text-align: left;">Full Name</th>
+        <th style="padding: 10px; text-align: left;">Course</th>
+        <th style="padding: 10px; text-align: left;">Status</th>
       </tr>
     </thead>
-    <tbody id="studentTableBody"></tbody>
+    <tbody id="studentTableBody">
+      <!-- Student rows will be inserted here -->
+    </tbody>
   </table>
-  <button id="deleteSelected">Delete Selected</button> <!-- Delete Selected Button -->
-  <button id="exportToExcel">Export to Excel</button>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <button id="deleteSelected" style="background-color: #f44336; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px;">Delete Selected</button>
+    <button id="exportToExcel" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; margin: 5px;">Export to Excel</button>
+  </div>
 
   <!-- Firebase and External Libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
