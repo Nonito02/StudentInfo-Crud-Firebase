@@ -16,6 +16,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      font-size: 1rem; /* Increase base font size */
     }
 
     /* Container Styles */
@@ -32,6 +33,7 @@
     h1, h2 {
       color: #0d3b66;
       text-align: center;
+      font-size: 2rem; /* Increase font size for headers */
     }
 
     /* Compact button styles */
@@ -43,13 +45,13 @@
     }
 
     .button-container button {
-      padding: 0.4rem 1rem;
+      padding: 0.6rem 1.2rem; /* Increase padding for buttons */
       background-color: #003366;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 1rem; /* Increase font size for buttons */
     }
 
     .button-container button:hover {
@@ -60,7 +62,7 @@
     .user-input {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 1.2rem; /* Increase gap between form elements */
       margin-bottom: 2rem;
       justify-content: center;
     }
@@ -72,15 +74,17 @@
 
     label {
       display: block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem; /* Increase margin for labels */
       font-weight: bold;
+      font-size: 1rem; /* Increase font size for labels */
     }
 
     input[type="text"], input[type="file"] {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.8rem; /* Increase padding for inputs */
       border: 1px solid #ccc;
       border-radius: 4px;
+      font-size: 1rem; /* Increase font size for inputs */
     }
 
     /* Table Styles */
@@ -91,9 +95,10 @@
     }
 
     th, td {
-      padding: 0.75rem;
+      padding: 1rem; /* Increase padding for table cells */
       border: 1px solid #ccc;
       text-align: left;
+      font-size: 1rem; /* Increase font size for table content */
     }
 
     th {
@@ -110,7 +115,7 @@
     /* Responsive Design */
     @media screen and (max-width: 768px) {
       .container {
-        padding: 1rem;
+        padding: 1.5rem;
       }
 
       .user-input {
@@ -126,20 +131,21 @@
         width: 100%;
         padding: 1rem;
         margin: 0.5rem 0;
+        font-size: 1rem;
       }
 
       table {
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
     }
 
     @media screen and (max-width: 480px) {
       h1, h2 {
-        font-size: 1.5rem;
+        font-size: 1.75rem; /* Slightly decrease size for smaller screens */
       }
 
       button {
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
     }
   </style>
