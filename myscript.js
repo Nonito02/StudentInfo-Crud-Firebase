@@ -259,6 +259,8 @@ document.getElementById("showStudents").addEventListener("click", function () {
       console.error("Error fetching students:", error);
     });
 });
+
+
 // Function to handle Excel file import, display in table, and insert into Firebase
 document.getElementById("importData").addEventListener("click", function() {
   const fileInput = document.getElementById("importFile");
@@ -292,9 +294,9 @@ document.getElementById("importData").addEventListener("click", function() {
         // Insert into Firebase
         const studentRef = firebase.database().ref("students").push();
         studentRef.set({
-          name: student['Full Name'] || "N/A",  // Adjust based on your Excel column name
-          course: student['Course'] || "N/A",    // Adjust based on your Excel column name
-          status: student['Status'] || "Pending" // Adjust based on your Excel column name
+          name: student['name'] || "N/A",      // Adjusted to use the actual 'name' from the Excel file
+          course: student['course'] || "N/A",  // Adjusted to use the actual 'course' from the Excel file
+          status: student['status'] || "Pending" // Adjusted to use the actual 'status' from the Excel file
         })
         .then(() => {
           console.log("Student added:", student.name);
@@ -307,9 +309,9 @@ document.getElementById("importData").addEventListener("click", function() {
         const row = tableBody.insertRow();
         row.innerHTML = `
           <td><input type="checkbox" class="studentCheckbox" data-id="${studentRef.key}" /></td>
-          <td>${student['Full Name'] || "N/A"}</td>
-          <td>${student['Course'] || "N/A"}</td>
-          <td>${student['Status'] || "Pending"}</td>
+          <td>${student['name'] || "N/A"}</td>        <!-- Display the 'name' from Excel -->
+          <td>${student['course'] || "N/A"}</td>      <!-- Display the 'course' from Excel -->
+          <td>${student['status'] || "Pending"}</td>  <!-- Display the 'status' from Excel -->
         `;
       });
       alert("Data imported successfully!");
