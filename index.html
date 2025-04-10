@@ -108,6 +108,27 @@
       gap: 1rem;
       flex-wrap: wrap;
     }
+
+    /* Pagination Styles */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .pagination button {
+      padding: 0.5rem 1rem;
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .pagination button:hover {
+      background-color: #00509e;
+    }
   </style>
 </head>
 <body>
@@ -148,9 +169,8 @@
       <button id="read">Search</button>
     </div>
 
-       <div class="table-actions">
+    <div class="table-actions">
       <button id="showStudents">Show Students</button>
-      <button id="deleteSelected">Delete Selected</button>
       <button id="exportToExcel">Export to Excel</button>
     </div>
     
@@ -158,19 +178,19 @@
     <table>
       <thead>
         <tr>
-         
           <th>Full Name</th>
           <th>Course</th>
           <th>Status</th>
- <th><input type="checkbox" id="selectAll" /></th>
-          
         </tr>
       </thead>
       <tbody id="studentTableBody"></tbody>
     </table>
 
-    <!-- Table Actions -->
- 
+    <!-- Pagination -->
+    <div class="pagination" id="pagination">
+      <button id="prevPage">Previous</button>
+      <button id="nextPage">Next</button>
+    </div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
@@ -178,5 +198,68 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
   <script src="fireConfig.js"></script>
   <script src="myscript.js"></script>
+
+  <script>
+    // JavaScript for handling table pagination and actions
+
+    let studentsData = [];  // This will hold the student data
+    let currentPage = 1;
+    const recordsPerPage = 20;
+
+    document.getElementById('showStudents').addEventListener('click', showStudents);
+    document.getElementById('nextPage').addEventListener('click', nextPage);
+    document.getElementById('prevPage').addEventListener('click', prevPage);
+    document.getElementById('exportToExcel').addEventListener('click', exportToExcel);
+
+    // Fetch the data to be displayed
+    function showStudents() {
+      // You can replace this with actual data fetching logic (e.g., from Firebase or a database)
+      studentsData = [
+        { name: 'John Doe', course: 'Computer Science', status: 'Pending' },
+        { name: 'Jane Smith', course: 'Business Administration', status: 'Ready to Claim' },
+        // Add more mock data here...
+      ];
+      displayStudents(currentPage);
+    }
+
+    // Display students with pagination
+    function displayStudents(page) {
+      const startIndex = (page - 1) * recordsPerPage;
+      const endIndex = startIndex + recordsPerPage;
+      const currentStudents = studentsData.slice(startIndex, endIndex);
+
+      const tableBody = document.getElementById('studentTableBody');
+      tableBody.innerHTML = '';
+
+      currentStudents.forEach(student => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${student.name}</td><td>${student.course}</td><td>${student.status}</td>`;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Handle "Next" button click
+    function nextPage() {
+      if (currentPage * recordsPerPage < studentsData.length) {
+        currentPage++;
+        displayStudents(currentPage);
+      }
+    }
+
+    // Handle "Previous" button click
+    function prevPage() {
+      if (currentPage > 1) {
+        currentPage--;
+        displayStudents(currentPage);
+      }
+    }
+
+    // Export table to Excel
+    function exportToExcel() {
+      const table = document.querySelector('table');
+      const wb = XLSX.utils.table_to_book(table, { sheet: 'Students' });
+      XLSX.writeFile(wb, 'students.xlsx');
+    }
+  </script>
 </body>
 </html>
