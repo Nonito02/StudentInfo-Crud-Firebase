@@ -53,15 +53,19 @@ document.getElementById("insert").onclick = function () {
     if (snapshot.exists()) {
       alert("This student is already on the list.");
     } else {
-      const newStudentRef = firebase.database().ref("students").push();
+      const newStudentRef = firebase.database().ref("students").push(); // Create new record
       newStudentRef.set({
         name: nameV,
         course: courseV,
         status: statusV
+      }).then(() => {
+        alert("Data Inserted");
+        clearForm();
+        showStudentTable(); // Refresh table
+      }).catch((error) => {
+        console.error("Error inserting data: ", error);
+        alert("Failed to insert data.");
       });
-      alert("Data Inserted");
-      clearForm();
-      showStudentTable(); // Refresh table
     }
   });
 };
@@ -153,11 +157,15 @@ document.getElementById("importData").onclick = function () {
 
         students.forEach(function (student) {
           if (student.name && student.course && student.status) {
-            const newStudentRef = firebase.database().ref("students").push();
+            const newStudentRef = firebase.database().ref("students").push(); // Create new record
             newStudentRef.set({
               name: student.name,
               course: student.course,
               status: student.status
+            }).then(() => {
+              console.log("Imported student:", student.name);
+            }).catch((error) => {
+              console.error("Error importing student:", error);
             });
           }
         });
