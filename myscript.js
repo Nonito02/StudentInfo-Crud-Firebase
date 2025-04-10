@@ -248,3 +248,40 @@ document.getElementById("showStudents").addEventListener("click", function() {
 });
 
 // Add logic for insert, update, delete, and other operations here as needed
+
+
+// INSERT  
+document.getElementById("insert").onclick = function () {
+  // Get values from the form
+  var nameV = document.getElementById("name").value;
+  var courseV = document.getElementById("course").value;
+  var statusV = document.getElementById("status").value;
+
+  // Reference the Firebase database to check if the student exists
+  var studentRef = firebase.database().ref("students").orderByChild("name").equalTo(nameV);
+  studentRef.once("value").then(function(snapshot) {
+    if (snapshot.exists()) {
+      alert("This student is already on the list.");
+    } else {
+      // Add the new student data
+      var newStudentRef = firebase.database().ref("students").push();
+      newStudentRef.set({
+        name: nameV,
+        course: courseV,
+        status: statusV
+      });
+      alert("Data Inserted");
+
+      // Clear the form fields after insertion
+      clearForm();
+    }
+  });
+};
+
+// Clear form function
+function clearForm() {
+  document.getElementById("name").value = "";
+  document.getElementById("course").value = "";
+  document.getElementById("status").value = "";
+}
+
