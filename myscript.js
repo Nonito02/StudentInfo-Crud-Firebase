@@ -259,8 +259,7 @@ document.getElementById("showStudents").addEventListener("click", function () {
       console.error("Error fetching students:", error);
     });
 });
-
-// Function to handle Excel file import
+// Function to handle Excel file import, display in table, and insert into Firebase
 document.getElementById("importData").addEventListener("click", function() {
   const fileInput = document.getElementById("importFile");
   const file = fileInput.files[0];
@@ -283,9 +282,14 @@ document.getElementById("importData").addEventListener("click", function() {
     // Convert the sheet to JSON (each row as an object)
     const studentsData = XLSX.utils.sheet_to_json(sheet);
 
-    // Insert data into Firebase
+    // Clear table before appending new data
+    const tableBody = document.getElementById("studentTableBody");
+    tableBody.innerHTML = "";
+
+    // Insert data into Firebase and display in the table
     if (studentsData.length > 0) {
       studentsData.forEach(student => {
+        // Insert into Firebase
         const studentRef = firebase.database().ref("students").push();
         studentRef.set({
           name: student['Full Name'] || "N/A",  // Adjust based on your Excel column name
@@ -298,6 +302,15 @@ document.getElementById("importData").addEventListener("click", function() {
         .catch(error => {
           console.error("Error adding student:", error);
         });
+
+        // Create a new row in the table
+        const row = tableBody.insertRow();
+        row.innerHTML = `
+          <td><input type="checkbox" class="studentCheckbox" data-id="${studentRef.key}" /></td>
+          <td>${student['Full Name'] || "N/A"}</td>
+          <td>${student['Course'] || "N/A"}</td>
+          <td>${student['Status'] || "Pending"}</td>
+        `;
       });
       alert("Data imported successfully!");
     } else {
@@ -313,4 +326,3 @@ document.getElementById("importData").addEventListener("click", function() {
   // Read the file as binary string
   reader.readAsBinaryString(file);
 });
-
