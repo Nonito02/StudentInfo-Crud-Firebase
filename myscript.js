@@ -13,31 +13,36 @@ document.getElementById("importData").onclick = function () {
       header: true,
       skipEmptyLines: true,
       dynamicTyping: true,
-      complete: function (results) {
+      complete: async function (results) {
         const students = results.data;
-        console.log("Parsed students:", students); // 👈 Debug log
+        console.log("Parsed students:", students);
 
         let importedCount = 0;
         let skippedCount = 0;
 
         tableBody.innerHTML = "";
 
-        students.forEach(student => {
-          // Trim and validate
+        for (const student of students) {
           const name = student.name?.toString().trim();
           const course = student.course?.toString().trim();
           const status = student.status?.toString().trim();
 
           if (name && course && status) {
             const newStudent = { name, course, status };
-            studentRef.push(newStudent);
-            addStudentRow(newStudent);
-            importedCount++;
+
+            try {
+              await studentRef.push(newStudent); // Store in Firebase
+              addStudentRow(newStudent);         // Show in table
+              importedCount++;
+            } catch (error) {
+              console.error("Error saving to Firebase:", error);
+              skippedCount++;
+            }
           } else {
-            console.warn("Skipped invalid row:", student); // 👈 Warn on invalid row
+            console.warn("Skipped invalid row:", student);
             skippedCount++;
           }
-        });
+        }
 
         alert(`CSV Import complete.\nImported: ${importedCount}\nSkipped: ${skippedCount}`);
       },
