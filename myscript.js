@@ -2,9 +2,9 @@ var nameV, courseV, statusV;
 
 // Read form values
 function readForm() {
-  nameV = document.getElementById("name").value;
-  courseV = document.getElementById("course").value;
-  statusV = document.getElementById("status").value;
+  nameV = document.getElementById("name").value.trim();
+  courseV = document.getElementById("course").value.trim();
+  statusV = document.getElementById("status").value.trim();
   console.log(nameV, courseV, statusV);
 }
 
@@ -40,6 +40,8 @@ document.getElementById("insert").onclick = function () {
         }
       });
     }
+  }).catch(function(error) {
+    console.error("Error checking student existence:", error);
   });
 };
 
@@ -105,7 +107,7 @@ document.getElementById("showStudents").onclick = function () {
   // Clear existing table body
   document.getElementById("studentTableBody").innerHTML = "";
 
-  var studentRef = firebase.database().ref("students"); // Changed to "students"
+  var studentRef = firebase.database().ref("students");
 
   studentRef.once("value", function(snapshot) {
     var students = snapshot.val();
@@ -171,7 +173,7 @@ document.getElementById("importData").onclick = function () {
 
         students.forEach(function (student) {
           if (student.name && student.course && student.status) {
-            var newStudentRef = firebase.database().ref("students").push(); // Changed to "students"
+            var newStudentRef = firebase.database().ref("students").push();
             newStudentRef.set({
               name: student.name,
               course: student.course,
