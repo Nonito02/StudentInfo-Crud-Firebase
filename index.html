@@ -87,11 +87,6 @@
       font-size: 1rem; /* Increase font size for inputs */
     }
 
-    input[type="text"]::placeholder {
-      font-style: italic;
-      color: #aaa;
-    }
-
     /* Table Styles */
     table {
       width: 100%;
@@ -123,6 +118,17 @@
         padding: 1.5rem;
       }
 
+      .button-container {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+
+      .button-container button {
+        width: auto; /* Make buttons smaller */
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem; /* Smaller font size for buttons */
+      }
+
       .user-input {
         flex-direction: column;
         align-items: stretch;
@@ -132,25 +138,8 @@
         flex: 1 1 100%;
       }
 
-      .button-container {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .button-container button {
-        width: 100%;
-        padding: 1rem;
-        margin: 0.5rem 0;
-        font-size: 1rem;
-      }
-
-      input[type="text"], input[type="file"] {
-        padding: 1rem;
-        font-size: 1.1rem;
-      }
-
-      table {
-        font-size: 1rem;
+      input[type="file"] {
+        margin-top: 10px; /* Move input file field below */
       }
     }
 
@@ -159,18 +148,8 @@
         font-size: 1.75rem; /* Slightly decrease size for smaller screens */
       }
 
-      .button-container button {
+      button {
         font-size: 1rem;
-        padding: 0.8rem;
-      }
-
-      input[type="text"], input[type="file"] {
-        font-size: 1rem;
-        padding: 1rem;
-      }
-
-      label {
-        font-size: 0.9rem; /* Adjust label font size for smaller screens */
       }
     }
   </style>
@@ -193,15 +172,15 @@
     <div class="user-input">
       <div>
         <label for="name">Full Name:</label>
-        <input type="text" id="name" placeholder="Enter full name" />
+        <input type="text" id="name" />
       </div>
       <div>
         <label for="course">Course:</label>
-        <input type="text" id="course" placeholder="Enter course" />
+        <input type="text" id="course" />
       </div>
       <div>
         <label for="status">Status:</label>
-        <input type="text" id="status" placeholder="Enter status" />
+        <input type="text" id="status" />
       </div>
     </div>
 
