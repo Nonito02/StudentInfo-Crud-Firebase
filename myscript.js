@@ -2,6 +2,7 @@
   const studentRef = firebase.database().ref("students");
   let importedStudents = []; // Holds previewed data
 
+  // Function to add a student row to the table for preview
   function addStudentRow(student) {
     const tableBody = document.getElementById("studentTableBody");
     const row = tableBody.insertRow();
@@ -28,7 +29,7 @@
       const sheet = workbook.Sheets[sheetName];
       const students = XLSX.utils.sheet_to_json(sheet);
 
-      // Clear previous
+      // Clear previous data in the table
       tableBody.innerHTML = "";
       importedStudents = [];
 
@@ -55,7 +56,7 @@
     reader.readAsArrayBuffer(fileInput.files[0]);
   });
 
-  // Insert to Firebase
+  // Insert data into Firebase when 'Insert All to Firebase' is clicked
   document.getElementById("insertAll").addEventListener("click", async () => {
     if (!importedStudents.length) {
       return alert("No data to insert.");
@@ -66,6 +67,7 @@
 
     for (const student of importedStudents) {
       try {
+        // Insert each student into Firebase
         await studentRef.push(student);
         success++;
       } catch (error) {
@@ -76,6 +78,7 @@
 
     alert(`Insert completed!\nSuccess: ${success}\nFailed: ${failed}`);
     document.getElementById("insertAll").style.display = "none";
-    importedStudents = [];
+    importedStudents = []; // Reset the imported data after insertion
+    document.getElementById("studentTableBody").innerHTML = ""; // Clear preview table
   });
 </script>
