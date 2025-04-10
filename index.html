@@ -113,6 +113,35 @@
         padding: 1rem;
         margin-top: 1rem;
       }
+
+      /* Sidebar styles for small screens */
+      .user-input {
+        flex-direction: column;
+      }
+
+      .button-sidebar {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: #003366;
+        width: 250px;
+        padding: 1rem;
+        z-index: 10;
+        justify-content: flex-start;
+      }
+
+      .button-sidebar button {
+        margin-bottom: 1rem;
+        width: 100%;
+      }
+
+      /* Shift content to the right */
+      .container {
+        margin-left: 260px;
+      }
     }
 
     @media screen and (max-width: 480px) {
@@ -127,6 +156,18 @@
   </style>
 </head>
 <body>
+  <div class="button-sidebar">
+    <button id="insert">Insert</button>
+    <button id="read">Search</button>
+    <button id="update">Update</button>
+    <button id="delete">Delete</button>
+    <input type="file" id="importFile" accept=".csv" />
+    <button id="importData">Import Data</button>
+    <button id="showStudents">Show Students</button>
+
+    <button id="exportToExcel">Export to Excel</button>
+  </div>
+
   <div class="container">
     <h1>ID Production Monitoring</h1>
     <div class="user-input">
@@ -142,25 +183,12 @@
         <label for="status">Status:</label>
         <input type="text" id="status" />
       </div>
-      <div style="display: flex; align-items: flex-end; gap: 0.5rem; flex-wrap: wrap;">
-        <button id="insert">Insert</button>
-        <button id="read">Search</button>
-        <button id="update">Update</button>
-        <button id="delete">Delete</button>
-      </div>
-      <div style="display: flex; flex-direction: column;">
-        <input type="file" id="importFile" accept=".csv" />
-        <button id="importData">Import Data</button>
-      </div>
     </div>
 
     <h2>Students List</h2>
-    <button id="showStudents">Show Students</button>
-
     <table>
       <thead>
         <tr>
-          <th><input type="checkbox" id="selectAll" /></th>
           <th>Full Name</th>
           <th>Course</th>
           <th>Status</th>
@@ -168,9 +196,6 @@
       </thead>
       <tbody id="studentTableBody"></tbody>
     </table>
-    <button id="deleteSelected">Delete Selected</button>
-    <button id="exportToExcel">Export to Excel</button>
-
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
