@@ -15,20 +15,23 @@
       display: flex;
     }
 
+    /* Sidebar Styles */
     .sidebar {
       position: fixed;
       top: 0;
-      left: 0;
-      height: 100%;
+      left: -250px;
       width: 250px;
+      height: 100%;
       background-color: #003366;
       padding: 1rem;
       color: white;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+      transition: 0.3s ease;
       z-index: 10;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.open {
+      left: 0;
     }
 
     .sidebar button {
@@ -60,8 +63,9 @@
       border-radius: 4px;
     }
 
+    /* Main Content Area */
     .container {
-      margin-left: 260px;
+      margin-left: 0;
       padding: 2rem;
       width: 100%;
       transition: margin-left 0.3s ease;
@@ -128,18 +132,9 @@
 
     /* Responsive Design */
     @media screen and (max-width: 768px) {
-      .sidebar {
-        position: absolute;
-        left: -250px;
-        transition: left 0.3s ease;
-      }
-
-      .sidebar.open {
-        left: 0;
-      }
-
       .container {
         margin-left: 0;
+        padding: 1rem;
       }
 
       .user-input {
@@ -171,9 +166,9 @@
 
       .toggle-sidebar {
         display: block;
-        position: fixed;
-        top: 10px;
-        left: 10px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
         background-color: #003366;
         color: white;
         padding: 1rem;
@@ -195,6 +190,7 @@
   </style>
 </head>
 <body>
+  <!-- Sidebar -->
   <div class="sidebar">
     <button id="insert">Insert</button>
     <button id="read">Search</button>
@@ -207,6 +203,7 @@
     <button id="exportToExcel">Export to Excel</button>
   </div>
 
+  <!-- Main Content -->
   <div class="container">
     <h1>ID Production Monitoring</h1>
     <div class="user-input">
@@ -237,6 +234,7 @@
     </table>
   </div>
 
+  <!-- Sidebar Toggle Button -->
   <button class="toggle-sidebar">☰</button>
 
   <script>
@@ -248,6 +246,7 @@
     });
   </script>
 
+  <!-- Firebase and Other Scripts -->
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
