@@ -183,3 +183,135 @@ document.getElementById("importData").onclick = function () {
 
   reader.readAsText(file); // Read the file as text
 };
+
+// Function to display students and include a checkbox for each row
+function displayStudents(students) {
+  const tableBody = document.getElementById("studentTableBody");
+  tableBody.innerHTML = ""; // Clear existing rows
+
+  if (students) {
+    for (const key in students) {
+      const student = students[key];
+      const row = tableBody.insertRow();
+      
+      row.innerHTML = `
+        <td><input type="checkbox" class="selectStudent" data-key="${key}" /></td>
+        <td>${student.name || "N/A"}</td>
+        <td>${student.course || "N/A"}</td>
+        <td>${student.status || "Pending"}</td>
+      `;
+    }
+  } else {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="4" style="text-align: center;">
+          <p>No students found</p>
+        </td>
+      </tr>
+    `;
+  }
+}
+
+// Select/Deselect all checkboxes
+document.getElementById("selectAll").addEventListener("change", function () {
+  const checkboxes = document.querySelectorAll(".selectStudent");
+  checkboxes.forEach(checkbox => {
+    checkbox.checked = this.checked;
+  });
+});
+
+// Delete selected students
+document.getElementById("deleteSelected").addEventListener("click", function () {
+  const checkboxes = document.querySelectorAll(".selectStudent:checked");
+  const keysToDelete = [];
+  
+  checkboxes.forEach(checkbox => {
+    keysToDelete.push(checkbox.dataset.key);
+  });
+
+  if (keysToDelete.length > 0) {
+    // Delete from Firebase
+    keysToDelete.forEach(key => {
+      firebase.database().ref("students").child(key).remove()
+        .then(() => {
+          console.log(`Student with ID ${key} deleted.`);
+        })
+        .catch(error => {
+          console.error("Error deleting student:", error);
+        });
+    });
+    
+    // Refresh the student list
+    displayStudents();
+  } else {
+    alert("Please select at least one student to delete.");
+  }
+});
+
+// Function to fetch and display students
+document.getElementById("showStudents").addEventListener("click", function () {
+  firebase.database().ref("students").once("value")
+    .then(snapshot => {
+      const students = snapshot.val();
+      displayStudents(students);
+    })
+    .catch(error => {
+      console.error("Error fetching students:", error);
+    });
+});
+
+
+document.getElementById("importData").addEventListener("click", function() {
+  const fileInput = document.getElementById("importFile");
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Please select an Excel file to import.");
+    return;
+  }
+
+  // Read the Excel file
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const data = e.target.result;
+    const workbook = XLSX.read(data, { type: "binary" });
+
+    // Get the first sheet (assuming only one sheet for simplicity)
+    const sheetName = workbook.SheetNames[0];
+    const sheet = workbook.Sheets[sheetName];
+
+    // Convert the sheet to JSON (each row as an object)
+    const studentsData = XLSX.utils.sheet_to_json(sheet);
+
+    // Clear table before appending new data
+    const tableBody = document.getElementById("studentTableBody");
+    tableBody.innerHTML = "";
+
+    // Insert data into the table
+    if (studentsData.length > 0) {
+      studentsData.forEach(student => {
+        // Create a new row in the table
+        const row = tableBody.insertRow();
+
+        // Insert data from the Excel file directly into the table cells
+        row.innerHTML = `
+          <td><input type="checkbox" class="studentCheckbox" data-id="${student.id || ''}" /></td>
+          <td>${student['name'] || ''}</td>
+          <td>${student['course'] || ''}</td>
+          <td>${student['status'] || ''}</td>
+        `;
+      });
+      alert("Data imported successfully!");
+    } else {
+      alert("No data found in the Excel file.");
+    }
+  };
+
+  reader.onerror = function(error) {
+    console.error("Error reading file:", error);
+    alert("Failed to read file.");
+  };
+
+  // Read the file as binary string
+  reader.readAsBinaryString(file);
+});
