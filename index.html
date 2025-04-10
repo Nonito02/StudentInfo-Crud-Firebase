@@ -4,140 +4,158 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ID PRODUCTION MONITORING</title>
+  <title>ID Production Monitoring</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     body {
       font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
       margin: 0;
       padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-size: 1rem; /* Increase base font size */
     }
 
-    h1 {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .user-input {
-      max-width: 600px;
-      margin: 20px auto;
-      background-color: #ffffff;
-      padding: 20px;
+    /* Container Styles */
+    .container {
+      width: 100%;
+      max-width: 1000px; /* Limit container width on large screens */
+      padding: 2rem;
+      box-sizing: border-box;
+      background-color: white;
       border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+      color: #0d3b66;
+      text-align: center;
+      font-size: 2rem; /* Increase font size for headers */
+    }
+
+    /* Compact button styles */
+    .button-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      justify-content: center;
+    }
+
+    .button-container button {
+      padding: 0.6rem 1.2rem; /* Increase padding for buttons */
+      background-color: #003366;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem; /* Increase font size for buttons */
+    }
+
+    .button-container button:hover {
+      background-color: #00509e;
+    }
+
+    /* Form Styles */
+    .user-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem; /* Increase gap between form elements */
+      margin-bottom: 2rem;
+      justify-content: center;
     }
 
     .user-input div {
-      margin-bottom: 15px;
+      flex: 1 1 200px;
+      max-width: 300px;
     }
 
     label {
-      font-weight: bold;
-      margin-bottom: 5px;
       display: block;
+      margin-bottom: 0.6rem; /* Increase margin for labels */
+      font-weight: bold;
+      font-size: 1rem; /* Increase font size for labels */
     }
 
     input[type="text"], input[type="file"] {
       width: 100%;
-      padding: 8px;
-      font-size: 14px;
+      padding: 0.8rem; /* Increase padding for inputs */
       border: 1px solid #ccc;
       border-radius: 4px;
+      font-size: 1rem; /* Increase font size for inputs */
     }
 
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin: 5px;
-      font-size: 14px;
-    }
-
-    #insert {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    #read {
-      background-color: #2196F3;
-      color: white;
-    }
-
-    #update {
-      background-color: #FF9800;
-      color: white;
-    }
-
-    #delete {
-      background-color: #f44336;
-      color: white;
-    }
-
-    #importData {
-      background-color: #9C27B0;
-      color: white;
-    }
-
-    #showStudents {
-      background-color: #607D8B;
-      color: white;
-    }
-
+    /* Table Styles */
     table {
-      width: 90%;
-      margin: 0 auto;
+      width: 100%;
       border-collapse: collapse;
       background-color: white;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     th, td {
-      padding: 10px;
+      padding: 1rem; /* Increase padding for table cells */
+      border: 1px solid #ccc;
       text-align: left;
+      font-size: 1rem; /* Increase font size for table content */
     }
 
     th {
-      background-color: #2196F3;
-      color: white;
+      background-color: #e9ecef;
     }
 
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    tr:hover {
-      background-color: #f1f1f1;
-    }
-
+    /* Scrollable Table Container */
     .table-container {
-      margin-top: 20px;
+      max-height: 300px;  /* Adjust as needed */
+      overflow-y: auto;   /* Enable vertical scrolling */
+      margin-top: 1rem;
     }
 
-    #deleteSelected, #exportToExcel {
-      margin: 5px;
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      .container {
+        padding: 1.5rem;
+      }
+
+      .user-input {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .user-input div {
+        flex: 1 1 100%;
+      }
+
+      button {
+        width: 100%;
+        padding: 1rem;
+        margin: 0.5rem 0;
+        font-size: 1rem;
+      }
+
+      table {
+        font-size: 1rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      h1, h2 {
+        font-size: 1.75rem; /* Slightly decrease size for smaller screens */
+      }
+
+      button {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>ID Production Monitoring</h1>
+  <div class="container">
+    <h1>ID Production Monitoring</h1>
 
-  <!-- User Input Form -->
-  <div class="user-input">
-    <div>
-      <label for="name">Full Name:</label>
-      <input type="text" id="name" />
-    </div>
-    <div>
-      <label for="course">Course:</label>
-      <input type="text" id="course" />
-    </div>
-    <div>
-      <label for="status">Status:</label>
-      <input type="text" id="status" />
-    </div>
-    <div style="text-align: center;">
+    <!-- Compact Buttons -->
+    <div class="button-container">
       <button id="insert">Insert</button>
       <button id="read">Search</button>
       <button id="update">Update</button>
@@ -145,41 +163,49 @@
       <input type="file" id="importFile" accept=".csv" style="margin: 10px 0;" />
       <button id="importData">Import Data</button>
     </div>
+
+    <!-- User Input Form -->
+    <div class="user-input">
+      <div>
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" />
+      </div>
+      <div>
+        <label for="course">Course:</label>
+        <input type="text" id="course" />
+      </div>
+      <div>
+        <label for="status">Status:</label>
+        <input type="text" id="status" />
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button id="showStudents">Show Students</button>
+      <button id="exportToExcel">Export to Excel</button>
+    </div>
+
+    <h2>Students List</h2>
+    
+    <!-- Scrollable Table -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Full Name</th>
+            <th>Course</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="studentTableBody"></tbody>
+      </table>
+    </div>
   </div>
 
-  <!-- Show Students Button -->
-  <div style="text-align: center; margin-bottom: 20px;">
-    <button id="showStudents">Show Students</button>
-  </div>
-
-  <!-- Students Table -->
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th><input type="checkbox" id="selectAll" /></th>
-          <th>Full Name</th>
-          <th>Course</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="studentTableBody">
-        <!-- Student rows will be inserted here -->
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Action Buttons -->
-  <div style="text-align: center; margin-top: 20px;">
-    <button id="deleteSelected">Delete Selected</button>
-    <button id="exportToExcel">Export to Excel</button>
-  </div>
-
-  <!-- Firebase and External Libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.2/xlsx.full.min.js"></script>
-  <script src="fireConfig.js"></script> <!-- Your Firebase configuration -->
+  <script src="fireConfig.js"></script>
   <script src="myscript.js"></script>
 </body>
 </html>
