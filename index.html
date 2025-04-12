@@ -118,7 +118,7 @@
     }
 
     /* Responsive Design */
-    /* Responsive Design */
+/* Responsive Design */
 @media screen and (max-width: 768px) {
   .container {
     padding: 1rem;
@@ -137,19 +137,17 @@
   .button-container {
     flex-direction: column;
     align-items: center;
+    gap: 0.5rem; /* Small spacing between buttons */
   }
 
   .button-container button,
   .button-container input[type="file"] {
     width: 100%;
-    padding: 1rem;
+    padding: 0.8rem;
     font-size: 1rem;
-    margin: 0.3rem 0;
   }
 
-  table,
-  th,
-  td {
+  table, th, td {
     font-size: 0.9rem;
   }
 
@@ -170,12 +168,16 @@
 
   input[type="text"], input[type="file"] {
     padding: 0.8rem;
-    font-size: 0.95rem;
+    font-size: 1rem;
+  }
+
+  .button-container {
+    gap: 0.4rem; /* Even smaller spacing for very small screens */
   }
 
   .button-container button {
-    font-size: 0.95rem;
-    padding: 0.9rem;
+    font-size: 1rem;
+    padding: 0.8rem;
   }
 
   .table-container {
@@ -187,6 +189,7 @@
     font-size: 0.85rem;
   }
 }
+
 
     }
   </style>
