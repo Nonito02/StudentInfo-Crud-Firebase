@@ -118,62 +118,76 @@
     }
 
     /* Responsive Design */
-    @media screen and (max-width: 768px) {
-      .container {
-        padding: 1.5rem;
-      }
+    /* Responsive Design */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
 
-      .user-input {
-        flex-direction: column;
-        align-items: stretch;
-      }
+  .user-input {
+    flex-direction: column;
+    align-items: center;
+  }
 
-      .user-input div {
-        flex: 1 1 100%;
+  .user-input div {
+    max-width: 100%;
+    width: 100%;
+  }
 
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-      }
+  .button-container button,
+  .button-container input[type="file"] {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    margin: 0.3rem 0;
+  }
 
-      .button-container {
-        flex-direction: column;
-        align-items: stretch;
-      }
+  table,
+  th,
+  td {
+    font-size: 0.9rem;
+  }
 
-      .button-container button {
-        width: 100%;
-        padding: 1rem;
-        margin: 0.5rem 0;
-        font-size: 1rem;
-      }
+  .table-container {
+    overflow-x: auto;
+  }
+}
 
-      input[type="text"], input[type="file"] {
-        padding: 1rem;
-        font-size: 1.1rem;
-      }
+@media screen and (max-width: 480px) {
+  h1, h2 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
 
-      table {
-        font-size: 1rem;
-      }
-    }
+  label {
+    font-size: 0.9rem;
+  }
 
-    @media screen and (max-width: 480px) {
-      h1, h2 {
-        font-size: 1.75rem; /* Slightly decrease size for smaller screens */
-      }
+  input[type="text"], input[type="file"] {
+    padding: 0.8rem;
+    font-size: 0.95rem;
+  }
 
-      .button-container button {
-        font-size: 1rem;
-        padding: 0.8rem;
-      }
+  .button-container button {
+    font-size: 0.95rem;
+    padding: 0.9rem;
+  }
 
-      input[type="text"], input[type="file"] {
-        font-size: 1rem;
-        padding: 1rem;
-      }
+  .table-container {
+    max-height: none;
+    overflow-x: auto;
+  }
 
-      label {
-        font-size: 0.9rem; /* Adjust label font size for smaller screens */
-      }
+  table {
+    font-size: 0.85rem;
+  }
+}
+
     }
   </style>
 </head>
