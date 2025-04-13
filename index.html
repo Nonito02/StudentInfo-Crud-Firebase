@@ -116,87 +116,102 @@
       overflow-y: auto;   /* Enable vertical scrolling */
       margin-top: 1rem;
     }
-    
 @media screen and (max-width: 768px) {
-  /* Sticky, smaller header */
+  /* Sticky smaller header */
   h1 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     text-align: center;
     margin: 0;
-    padding: 0.5rem 1rem;
-    background-color: #ffffff;
+    padding: 0.75rem;
+    background-color: #fff;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 10;
     border-bottom: 1px solid #ccc;
   }
 
-  h2 {
-    font-size: 1rem;
-    text-align: center;
-    margin-top: 1rem;
+  /* Input fields stacked with no spacing in placeholder */
+  .user-input {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
   }
 
-  /* Form layout */
-  .user-input {
-    flex-direction: column;
+  .user-input input[type="text"],
+  .user-input select {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .user-input input::placeholder {
+    padding: 0;
+    margin: 0;
+    font-size: 0.8rem;
+    color: #999;
+  }
+
+  /* CRUD buttons (1 2 3 4) in one row */
+  .crud-buttons {
+    display: flex;
+    justify-content: space-between;
     padding: 0 1rem;
     gap: 0.5rem;
     margin-bottom: 1rem;
   }
 
-  .user-input div {
-    max-width: 100%;
+  .crud-buttons button {
+    flex: 1;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
   }
 
-  label {
-    font-size: 0.85rem;
-    margin-bottom: 0.3rem;
-  }
-
-  input[type="text"], input[type="file"] {
-    width: 100%;
-    padding: 0.4rem;
-    font-size: 0.85rem;
-    margin: 0;
-  }
-
-  /* No extra spacing in placeholders */
-  input[type="text"]::placeholder {
-    font-size: 0.8rem;
-    font-style: italic;
-    color: #aaa;
-    padding: 0;
-    margin: 0;
-  }
-
-  /* Button container: show all buttons, stacked with minimal spacing */
-  .button-container {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.4rem;
+  /* Import and small button */
+  .action-row {
+    display: flex;
+    justify-content: space-between;
     padding: 0 1rem;
-    margin: 1rem 0;
+    margin-bottom: 1rem;
   }
 
-  .button-container button,
-  .button-container input[type="file"] {
+  .action-row button {
+    flex: 1;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
+
+  .action-row button + button {
+    margin-left: 0.5rem;
+    flex: 0.3;
+  }
+
+  /* Show List Button */
+  .show-list-button {
     width: 100%;
-    padding: 0.5rem;
-    font-size: 0.85rem;
-    margin: 0;
+    padding: 0.75rem;
+    margin: 0 1rem 1rem 1rem;
+    font-size: 1rem;
+    font-weight: bold;
   }
 
-  /* Compact table */
+  /* Table container */
   .table-container {
-    margin-top: 1rem;
-    max-height: 50vh;
-    overflow-y: auto;
+    margin: 0 1rem 1rem 1rem;
+    overflow-x: auto;
   }
 
-  table, th, td {
+  table {
+    width: 100%;
     font-size: 0.85rem;
+    border-collapse: collapse;
+  }
+
+  th, td {
     padding: 0.5rem;
+    border: 1px solid #ccc;
   }
 }
 
