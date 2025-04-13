@@ -141,7 +141,7 @@
   .user-input {
     flex-direction: column;
     padding: 0 1rem;
-    gap: 0.3rem;
+    gap: 0.5rem;
     margin-bottom: 1rem;
   }
 
@@ -151,21 +151,26 @@
 
   label {
     font-size: 0.85rem;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.3rem;
   }
 
   input[type="text"], input[type="file"] {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.4rem;
     font-size: 0.85rem;
     margin: 0;
   }
 
+  /* No extra spacing in placeholders */
   input[type="text"]::placeholder {
     font-size: 0.8rem;
+    font-style: italic;
+    color: #aaa;
+    padding: 0;
+    margin: 0;
   }
 
-  /* Buttons stacked vertically with less spacing */
+  /* Button container: show all buttons, stacked with minimal spacing */
   .button-container {
     flex-direction: column;
     align-items: stretch;
@@ -174,14 +179,11 @@
     margin: 1rem 0;
   }
 
-  .button-container button {
+  .button-container button,
+  .button-container input[type="file"] {
+    width: 100%;
     padding: 0.5rem;
     font-size: 0.85rem;
-  }
-
-  .button-container input[type="file"] {
-    font-size: 0.8rem;
-    padding: 0.4rem;
     margin: 0;
   }
 
@@ -197,6 +199,7 @@
     padding: 0.5rem;
   }
 }
+
 
     }
   </style>
