@@ -136,14 +136,37 @@
   }
 
   .button-container + .button-container {
-    top: auto; /* prevent collision */
+    top: auto; /* prevent overlap */
   }
 
   .table-container {
     flex: 1;
     overflow-y: auto;
   }
+
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .button-container button {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+
+  .button-container input[type="file"] {
+    order: 1; /* ensure it appears after buttons */
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
 }
+
 
     }
   </style>
