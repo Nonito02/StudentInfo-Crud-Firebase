@@ -116,80 +116,34 @@
       overflow-y: auto;   /* Enable vertical scrolling */
       margin-top: 1rem;
     }
-
-    /* Responsive Design */
-/* Responsive Design */
 @media screen and (max-width: 768px) {
   .container {
-    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
   }
 
+  h1, h2,
+  .button-container,
   .user-input {
-    flex-direction: column;
-    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: white;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 
-  .user-input div {
-    max-width: 100%;
-    width: 100%;
-  }
-
-  .button-container {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem; /* Small spacing between buttons */
-  }
-
-  .button-container button,
-  .button-container input[type="file"] {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-  }
-
-  table, th, td {
-    font-size: 0.9rem;
+  .button-container + .button-container {
+    top: auto; /* prevent collision */
   }
 
   .table-container {
-    overflow-x: auto;
+    flex: 1;
+    overflow-y: auto;
   }
 }
-
-@media screen and (max-width: 480px) {
-  h1, h2 {
-    font-size: 1.5rem;
-    text-align: center;
-  }
-
-  label {
-    font-size: 0.9rem;
-  }
-
-  input[type="text"], input[type="file"] {
-    padding: 0.8rem;
-    font-size: 1rem;
-  }
-
-  .button-container {
-    gap: 0.4rem; /* Even smaller spacing for very small screens */
-  }
-
-  .button-container button {
-    font-size: 1rem;
-    padding: 0.8rem;
-  }
-
-  .table-container {
-    max-height: none;
-    overflow-x: auto;
-  }
-
-  table {
-    font-size: 0.85rem;
-  }
-}
-
 
     }
   </style>
